@@ -76,7 +76,10 @@ docker-compose build --no-cache && docker compose up
 
 ### 4. Access
 ```
-http://public-ip:8069
+Asignar EIP a EC2 Odoo (IP fija)
+```
+```
+http://EIP:8069
 ```
 Note: Open the 8069 port in the SG in EC2
 
