@@ -147,7 +147,7 @@ Selecciona tu nuevo repositorio y haz clic en el botón View push commands (Ver 
 
     Subir (push) la imagen a la nube.
 
-Fase 4: Despliegue en Amazon ECS con Fargate
+Fase 4: Despliegue en Amazon ECS con Fargate o EKS (K8S)
 
 Esta es la parte "Serverless" para contenedores. AWS ejecutará la imagen sin que encendamos máquinas virtuales (EC2).
 
