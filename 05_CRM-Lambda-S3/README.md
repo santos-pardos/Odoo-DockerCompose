@@ -49,9 +49,9 @@ s3 = boto3.client('s3')
 
 2. Variables de entorno (Configura esto en la pestaña "Configuration" de tu Lambda)
 ODOO_URL = os.environ.get('ODOO_URL', 'http://TU_IP_DE_ODOO:8069')
-ODOO_DB = os.environ.get('ODOO_DB', 'tu_base_de_datos')
-ODOO_USER = os.environ.get('ODOO_USER', 'tu_usuario_admin')
-ODOO_PASSWORD = os.environ.get('ODOO_PASSWORD', 'tu_contraseña')
+ODOO_DB = os.environ.get('ODOO_DB', 'odoo')
+ODOO_USER = os.environ.get('ODOO_USER', 's@s.com')
+ODOO_PASSWORD = os.environ.get('ODOO_PASSWORD', 'A123456b')
 
 def lambda_handler(event, context):
     # 3. Extraemos el nombre del bucket y el archivo que acaba de subir a S3
