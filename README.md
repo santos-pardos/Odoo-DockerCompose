@@ -101,6 +101,7 @@ sudo systemctl restart nginx
 ### 5. Launch
 ```
 cd Odoo-DockerCompose
+sudo chown -R $USER:$USER addons config sessions
 docker-compose up -d
 ```
 ```
