@@ -1,8 +1,7 @@
 ![alt text](Architecture.png)
 
 ## Odoo Modules
-Empleados
-CRM
+Empleados y CRM
 
 ## Labmda Enviroment variable
 ```
