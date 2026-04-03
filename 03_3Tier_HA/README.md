@@ -1,7 +1,13 @@
 ![alt text](Architecture.png)
 
+## Create RDS Postgress 
+```
+User: odoo
+Password A123456b
+BBDD: odoo
+```
 ## User-data - Ami Linux 2023
-
+Note: Change RDS Endpoint in the user-data file
 ```
 #!/bin/bash
 # 1. Actualizar e instalar Docker en Amazon Linux 2023
