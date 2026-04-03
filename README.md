@@ -83,24 +83,7 @@ http://EIP:8069
 ```
 Note: Open the 8069 port in the SG in EC2
 
-### 5. Stop
-```
-docker-compose down
-```
-
-### 6. Tips
-```
-sudo chown -R $USER:$USER addons config sessions
-```
-```
-docker logs <container_name>
-The actual log will also be at /etc/odoo/odoo.log inside the container
-```
-### 7. DdBeaver
-```
-docker run -d --network odoo-docker_default --name cloudbeaver --restart unless-stopped -p 8978:8978 -v /opt/cloudbeaver/workspace dbeaver/cloudbeaver:latest
-```
-### 8. NGINX
+### 5. NGINX - Proxy Inverso
 ```
 sudo dnf install nginx -y
 ```
@@ -122,6 +105,25 @@ server {
 ```
 sudo systemctl restart nginx
 ```
+
+### 6. Stop
+```
+docker-compose down
+```
+
+### 7. Tips
+```
+sudo chown -R $USER:$USER addons config sessions
+```
+```
+docker logs <container_name>
+The actual log will also be at /etc/odoo/odoo.log inside the container
+```
+### 8. DdBeaver
+```
+docker run -d --network odoo-docker_default --name cloudbeaver --restart unless-stopped -p 8978:8978 -v /opt/cloudbeaver/workspace dbeaver/cloudbeaver:latest
+```
+
 ### 9. PSQL
 ```
 docker-compose ps
