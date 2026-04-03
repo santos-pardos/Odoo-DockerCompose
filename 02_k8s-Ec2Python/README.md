@@ -180,6 +180,10 @@ Ve a tu clúster y crea un nuevo Service.
 Una vez que el servicio esté en estado "Running", entra en los detalles de la Tarea y copia la IP Pública. Tu microservicio ya está vivo en Internet.
 
 ## Modulo Odoo - Generación PDF
+Cambia los permisos a la carpeta addons y al módulo antes de lanzar odoo
+```
+chmod -R 755 .
+```
 Cómo instalar el módulo en Odoo 19
 
 Dado que tienes tu Odoo en localhost, la forma oficial y más fiable de instalar módulos personalizados es esta:
