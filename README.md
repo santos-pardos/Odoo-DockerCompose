@@ -97,7 +97,29 @@ The actual log will also be at /etc/odoo/odoo.log inside the container
 ```
 docker run -d --network odoo-docker_default --name cloudbeaver --restart unless-stopped -p 8978:8978 -v /opt/cloudbeaver/workspace dbeaver/cloudbeaver:latest
 ```
-### 8. PSQL
+### 8. NGINX
+```
+sudo dnf isntall nginx -y
+```
+```
+sudo nano /etc/nginx/conf.d/odoo.conf
+```
+```
+server {
+    listen 80;
+
+    location / {
+        proxy_pass http://127.0.0.1:8069;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+```
+sudo systemctl restart nginx
+```
+### 9. PSQL
 ```
 docker-compose ps
 docker-compose logs db
