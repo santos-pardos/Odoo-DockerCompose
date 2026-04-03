@@ -1,5 +1,9 @@
 ![alt text](Architecture.png)
 
+## Odoo Modules
+Empleados
+CRM
+
 ## Labmda Enviroment variable
 ```
 ODOO_DB
