@@ -9,7 +9,7 @@ services:
       - "8069:8069"
       - "8072:8072"
     environment:
-      - HOST=tu-base-de-datos.cxxxxxxx.eu-west-1.rds.amazonaws.com
+      - HOST=odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
       - USER=odoo
       - PASSWORD=A123456b
       - PORT=5432
