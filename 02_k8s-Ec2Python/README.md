@@ -234,3 +234,44 @@ Para que cuando pulses el botón no te dé un error de "Connection Timeout", ase
     Puerto Abierto: En el Security Group de AWS, la regla para el puerto 5000 debe estar activa para 0.0.0.0/0.
 
     Librería Python: Tu Odoo local debe tener instalada la librería requests. Como usas Odoo 19 Community, es casi seguro que ya la tiene, pero si fallara, tendrías que hacer un pip install requests en el entorno donde corre tu Odoo.
+
+ Los últimos pasos en Odoo:
+
+    Reinicia tu servicio de Odoo para que vuelva a escanear el disco duro con sus nuevos permisos. (Dependiendo de cómo lo hayas instalado, suele ser algo como sudo systemctl restart odoo o simplemente detener y volver a lanzar tu comando de ejecución).
+
+    Ve a Odoo y asegúrate de tener el Modo Desarrollador activado.
+
+    Ve a Aplicaciones.
+
+    Haz clic en Actualizar lista de aplicaciones (Update Apps List) en el menú superior.
+
+    Quita el filtro azul de "Aplicaciones" de la barra de búsqueda y busca la palabra AWS.
+
+    Paso 1: Ve a la aplicación de Contactos
+
+    Vuelve a la pantalla principal de tu Odoo.
+
+    Entra en la aplicación de Contactos.
+
+    Haz clic en cualquier cliente que tengas creado (o crea uno nuevo con un nombre y un email de prueba).
+
+Paso 2: Busca el nuevo botón
+
+    Una vez dentro de la ficha del cliente, fíjate en la parte superior izquierda del formulario, justo encima del nombre del cliente (en la zona gris clara que llamamos el Header).
+
+    Deberías ver tu nuevo botón destacado que dice "Generar PDF (Nube AWS)" con el icono de una nubecita.
+
+Paso 3: ¡Haz la prueba de fuego!
+
+    (Importante: Asegúrate de que tu contenedor Docker en AWS sigue encendido ejecutando docker run -d -p 5000:5000 api-pdf-odoo en tu terminal de AWS, de lo contrario dará error de conexión).
+
+    Haz clic en el botón "Generar PDF (Nube AWS)".
+
+    Odoo se quedará "pensando" un par de segundos. En este exacto momento, Odoo está viajando por internet, golpeando el puerto 5000 de tu IP de AWS, el contenedor Docker está procesando el HTML, creando el archivo binario y devolviéndolo a Odoo.
+
+Paso 4: Comprueba el resultado
+Si la integración ha sido un éxito, la página se refrescará ligeramente y verás dos evidencias de que ha funcionado:
+
+    En el historial (Chatter): En el panel derecho (o en la parte inferior, según el tamaño de tu monitor), verás un nuevo mensaje automático en el registro del cliente que dice: "✅ PDF generado exitosamente en AWS y guardado en adjuntos."
+
+    El archivo PDF: En la parte superior derecha de la pantalla, busca el icono del clip de papel 📎 (Adjuntos). Verás que ahora marca que hay un documento. Haz clic en el clip y ahí estará tu archivo AWS_NombreDelCliente.pdf.
