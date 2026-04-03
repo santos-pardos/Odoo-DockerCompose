@@ -62,12 +62,12 @@ sudo dnf install git -y
 ```
 ### 2. Clone Git Repository
 ```
-git clone https://github.com/santos-pardos/Hands-On-Lab-in-AWS.git
+git clone https://github.com/santos-pardos/Odoo-DockerCompose.git
 ```
 
 ### 3. Launch
 ```
-cd Hands-On-Lab-in-AWS/Containers/Dockers/Odoo-docker/
+cd Odoo-DockerCompose
 docker-compose up -d
 ```
 ```
