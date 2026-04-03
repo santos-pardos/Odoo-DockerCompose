@@ -20,4 +20,3 @@ services:
       - /mnt/efs/addons:/mnt/extra-addons
       - /mnt/efs/config:/etc/odoo
 
-# No hay sección 'volumes:' abajo porque no usamos almacenamiento local de Docker
