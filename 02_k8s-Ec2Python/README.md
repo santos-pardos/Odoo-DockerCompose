@@ -1,5 +1,6 @@
 
 ## Diagrama Odoo → AWS EKS (generación de PDF)
+![alt text](Architecture.png)
 ```
 Flujo descrito en el diagrama:
 
