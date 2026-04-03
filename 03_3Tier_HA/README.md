@@ -63,7 +63,7 @@ docker compose up -d
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
 
-## Create Odoo with tables
+## Create Odoo tables
 ```
 sudo dnf install -y postgresql15
 ```
@@ -72,6 +72,10 @@ docker run --rm -it \
   -v odoo-data:/var/lib/odoo \
   -v /home/ec2-user/odoo-pilot/odoo.conf:/etc/odoo/odoo.conf \
   odoo:latest odoo -c /etc/odoo/odoo.conf -d odoo -i sale,stock,account --stop-after-init
+```
+```
+Login user: admin
+Password user: admin
 ```
 
 ## Delete Odoo Tables
