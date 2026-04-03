@@ -110,3 +110,38 @@ proxy_mode = True
 ```
 La configuración del Target Group de tu balanceador en AWS, debes activar las Sticky Sessions (Sesiones basadas en cookies)
 ```
+## EFS
+```
+sudo mkdir /mnt/odoo-data
+sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-04bb2995d5c63aab7.efs.us-east-1.amazonaws.com:/ /mnt/odoo-data
+```
+```
+DAR PERMISOS AL USUARIO DE ODOO (Paso Clave)
+Cambiamos el dueño del EFS al UID 101 que usa el contenedor
+sudo chown -R 101:101 /mnt/odoo-data
+sudo chmod -R 775 /mnt/odoo-data
+```
+```
+services:
+  odoo:
+    image: odoo:latest
+    ports:
+      - "80:8069"
+    volumes:
+      - /mnt/odoo-data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+      - USER=odoo
+      - PASSWORD=A123456b
+    restart: always
+
+volumes:
+  odoo-web-data:
+```
+```
+docker run --rm -it \
+  -v /mnt/odoo-data:/var/lib/odoo \
+  -v /home/ec2-user/odoo-pilot/odoo.conf:/etc/odoo/odoo.conf \
+  odoo:latest odoo -c /etc/odoo/odoo.conf -d odoo -u web --stop-after-init
+```
