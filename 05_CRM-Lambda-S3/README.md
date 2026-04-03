@@ -1,4 +1,5 @@
 
+![alt text](Architecture.png)
 
 
 ## Tips
