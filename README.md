@@ -99,7 +99,7 @@ docker run -d --network odoo-docker_default --name cloudbeaver --restart unless-
 ```
 ### 8. NGINX
 ```
-sudo dnf isntall nginx -y
+sudo dnf install nginx -y
 ```
 ```
 sudo nano /etc/nginx/conf.d/odoo.conf
