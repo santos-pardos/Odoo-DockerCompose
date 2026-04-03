@@ -121,7 +121,7 @@ Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PD
 
     Código Python:
     Python
-
+```
     import os
     import urllib.parse
     import xmlrpc.client
@@ -150,7 +150,7 @@ Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PD
         }])
 
         return {"mensaje": f"Empleado {nombre_empleado} creado con ID {empleado_id}"}
-
+```
 2. Crea la segunda función Lambda:
 
     Nombre: Odoo_CrearLeadCRM
@@ -159,7 +159,7 @@ Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PD
 
     Código Python:
     Python
-
+```
     import os
     import urllib.parse
     import xmlrpc.client
@@ -184,7 +184,7 @@ Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PD
         }])
 
         return {"mensaje": f"Lead creado con ID {lead_id}"}
-
+```
 (Copia los ARN de ambas Lambdas, los necesitarás en el siguiente paso).
 Paso 2: Configurar Step Functions (El "Orquestador")
 
@@ -198,7 +198,7 @@ Aquí es donde creamos el flujo visual que dice "ejecuta estas dos cosas a la ve
 
     Pega el siguiente código JSON. Importante: Reemplaza los ARN_DE_TU_LAMBDA_... por los ARNs reales que copiaste en el paso anterior.
     JSON
-
+```
     {
       "Comment": "Flujo paralelo de Onboarding para Odoo",
       "StartAt": "Procesamiento Paralelo",
@@ -231,7 +231,7 @@ Aquí es donde creamos el flujo visual que dice "ejecuta estas dos cosas a la ve
         }
       }
     }
-
+```
     Guarda la máquina de estado con el nombre FlujoOnboardingOdoo. Copia el ARN de esta máquina de estado.
 
 Paso 3: Crear el Bucket S3 (El "Gatillo")
@@ -279,9 +279,8 @@ Por último, necesitamos el "cable" que conecte S3 con Step Functions.
 
     Termina y crea la regla.
 
-¡La Prueba de Fuego!
 
-Tu arquitectura está lista. Para enseñárselo a los alumnos en clase, el efecto "Wow" se hace así:
+Tu arquitectura está lista.
 
     Abre tres pestañas: tu módulo de Empleados en Odoo, tu módulo de CRM en Odoo y el flujo visual de tu Step Function en AWS.
 
