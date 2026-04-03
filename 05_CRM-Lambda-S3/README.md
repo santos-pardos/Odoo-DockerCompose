@@ -6,7 +6,7 @@ Para importar en el módulo de CRM de Odoo (cuyo modelo interno se llama crm.lea
 
 Crea un archivo llamado nuevos_leads.json:
 JSON
-
+```
 [
   {
     "name": "Interés en Curso de Arquitectura Cloud",
@@ -23,6 +23,7 @@ JSON
     "description": "Empresa de 50 empleados buscando pasar a la nube."
   }
 ]
+```
 
 Nota: Las claves (name, email_from, etc.) coinciden exactamente con los nombres técnicos de los campos en la base de datos de Odoo.
 2. La Función Lambda (Python)
@@ -38,15 +39,15 @@ import boto3
 import xmlrpc.client
 import os
 
-# 1. Inicializamos el cliente de S3
+1. Inicializamos el cliente de S3
 s3 = boto3.client('s3')
 
-# 2. Variables de entorno (Configura esto en la pestaña "Configuration" de tu Lambda)
+2. Variables de entorno (Configura esto en la pestaña "Configuration" de tu Lambda)
 ODOO_URL = os.environ.get('ODOO_URL', 'http://TU_IP_DE_ODOO:8069')
 ODOO_DB = os.environ.get('ODOO_DB', 'tu_base_de_datos')
 ODOO_USER = os.environ.get('ODOO_USER', 'tu_usuario_admin')
 ODOO_PASSWORD = os.environ.get('ODOO_PASSWORD', 'tu_contraseña')
-
+```
 def lambda_handler(event, context):
     # 3. Extraemos el nombre del bucket y el archivo que acaba de subir a S3
     bucket = event['Records'][0]['s3']['bucket']['name']
@@ -86,7 +87,7 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Error procesando el archivo {key} del bucket {bucket}: {str(e)}")
         raise e
-
+```
 3. Pasos críticos para que esto funcione en AWS
 
 Si tus alumnos van a desplegar esto en su cuenta de AWS, hay dos configuraciones clave en la consola de AWS que no deben olvidar:
