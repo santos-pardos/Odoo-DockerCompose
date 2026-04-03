@@ -117,7 +117,10 @@ Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PD
 
     Runtime: Python 3.x
 
-    Configuración: En la pestaña "Configuración > Variables de entorno", añade las credenciales de tu Odoo (ODOO_URL, ODOO_DB, ODOO_USER, ODOO_PASSWORD).
+    Configuración: En la pestaña "Configuración > Variables de entorno", añade las credenciales de tu Odoo
+   ```
+   (ODOO_URL, ODOO_DB, ODOO_USER, ODOO_PASSWORD)
+   ```
 
     Código Python:
     Python
