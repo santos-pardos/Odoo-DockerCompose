@@ -100,3 +100,13 @@ GRANT ALL ON SCHEMA public TO public;
 -- 4. Salir
 \q
 ```
+## ALB - ASG
+Modificación necesaria en el odoo.conf
+```
+Cuando hay un balanceador delante, Odoo debe saber que no está recibiendo tráfico directo. Debes añadir estas líneas a tu archivo de configuración en ambas instancias:
+
+proxy_mode = True
+```
+```
+La configuración del Target Group de tu balanceador en AWS, debes activar las Sticky Sessions (Sesiones basadas en cookies)
+```
