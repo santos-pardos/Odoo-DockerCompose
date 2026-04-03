@@ -103,6 +103,8 @@ Este comando lanza un contenedor desechable que entra a RDS, crea las tablas bas
 Bash
 ```
 docker-compose run --rm odoo odoo -i base -d odoo --stop-after-init
+or
+docker-compose run --rm odoo odoo -u all -d odoo --stop-after-init
 ```
 (Espera un par de minutos a que termine de procesar las tablas).
 
