@@ -182,7 +182,6 @@ Por último, necesitamos el "cable" que conecte S3 con Step Functions.
 
     Termina y crea la regla.
 
-¡La Prueba de Fuego!
 
 Tu arquitectura está lista. Para enseñárselo a los alumnos en clase, el efecto "Wow" se hace así:
 
