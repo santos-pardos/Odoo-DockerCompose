@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  odoo:
+    image: odoo:19.0
+    container_name: odoo_app
+    restart: always
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+    environment:
+      - HOST=tu-base-de-datos.cxxxxxxx.eu-west-1.rds.amazonaws.com
+      - USER=odoo
+      - PASSWORD=A123456b
+      - PORT=5432
+    volumes:
+      # --- PERSISTENCIA EN EFS ---
+      # Izquierda: Ruta real en tu servidor EC2 (donde está montado EFS)
+      # Derecha: Ruta interna del contenedor Odoo
+      - /mnt/efs/odoo_data:/var/lib/odoo
+      
+      # Mapeo de módulos
+      - ./addons:/mnt/extra-addons
+
+# Fíjate que hemos borrado la sección "volumes:" que había al final
+# porque ya no le pedimos a Docker que gestione el volumen, lo gestiona AWS (EFS).
