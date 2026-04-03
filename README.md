@@ -74,16 +74,16 @@ docker-compose up -d
 docker-compose build --no-cache && docker compose up
 ```
 
-### 4. Access
+### 4. EC2 EIP
 ```
-Asignar EIP a EC2 Odoo (IP fija)
+Assing an EIP to EC2 Odoo
 ```
 ```
 http://EIP:8069
 ```
 Note: Open the 8069 port in the SG in EC2
 
-### 5. NGINX - Proxy Inverso
+### 5. NGINX - Reverse Proxy
 ```
 sudo dnf install nginx -y
 ```
