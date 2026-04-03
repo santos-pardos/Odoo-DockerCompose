@@ -32,7 +32,7 @@ Esta función utiliza boto3 (la librería oficial de AWS preinstalada en Lambda)
 
 El código para tu función Lambda:
 Python
-
+```
 import json
 import urllib.parse
 import boto3
@@ -47,7 +47,7 @@ ODOO_URL = os.environ.get('ODOO_URL', 'http://TU_IP_DE_ODOO:8069')
 ODOO_DB = os.environ.get('ODOO_DB', 'tu_base_de_datos')
 ODOO_USER = os.environ.get('ODOO_USER', 'tu_usuario_admin')
 ODOO_PASSWORD = os.environ.get('ODOO_PASSWORD', 'tu_contraseña')
-```
+
 def lambda_handler(event, context):
     # 3. Extraemos el nombre del bucket y el archivo que acaba de subir a S3
     bucket = event['Records'][0]['s3']['bucket']['name']
