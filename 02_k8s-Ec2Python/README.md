@@ -178,3 +178,55 @@ Ve a tu clúster y crea un nuevo Service.
 
 4. Obtener la IP Pública
 Una vez que el servicio esté en estado "Running", entra en los detalles de la Tarea y copia la IP Pública. Tu microservicio ya está vivo en Internet.
+
+## Modulo Odoo - Generación PDF
+Cómo instalar el módulo en Odoo 19
+
+Dado que tienes tu Odoo en localhost, la forma oficial y más fiable de instalar módulos personalizados es esta:
+
+    Descomprime el ZIP: Extrae la carpeta aws_pdf_generator que viene dentro del ZIP.
+
+    Copia la carpeta a tus addons: Pega esa carpeta dentro del directorio addons de tu instalación local de Odoo (normalmente está en la ruta donde instalaste Odoo, en la carpeta server/odoo/addons o un directorio de addons personalizado si lo configuraste así).
+
+    Reinicia Odoo: Detén el servicio de Odoo y vuelve a iniciarlo para que lea la nueva carpeta.
+
+    Actualiza la lista de aplicaciones:
+
+        Abre Odoo en tu navegador e inicia sesión.
+
+        Activa el Modo Desarrollador (Ajustes > Activar modo desarrollador).
+
+        Ve al menú superior Aplicaciones (Apps).
+
+        En el menú superior (Odoo 19 suele esconderlo bajo la opción "Aplicaciones" o en un menú desplegable "Acción"), haz clic en "Actualizar lista de aplicaciones" (Update Apps List) y confirma.
+
+    Instala el módulo: En el buscador, quita el filtro por defecto de "Aplicaciones", busca la palabra AWS, y te aparecerá tu nuevo módulo Generador de PDF en AWS Fargate. ¡Dale a Instalar!
+
+Cuando entres en la ficha de cualquier cliente en la app de Contactos, verás en la parte superior un flamante botón azul llamado "Generar PDF (Nube AWS)". Ya tienes una integración real, empaquetada como un módulo profesional de Odoo.
+
+1. ¿Dónde aparecerá el botón?
+
+Si vas a la aplicación de Contactos y abres a cualquier persona o empresa, verás una barra gris en la parte superior (el "Header"). Ahí aparecerá un botón azul brillante con el texto: "Generar PDF (Nube AWS)" y un pequeño icono de una nube.
+2. ¿Qué ocurre técnicamente cuando haces clic?
+
+Cuando un alumno (o tú) pulse ese botón, se dispara el siguiente flujo arquitectónico:
+
+    Odoo (Local): Ejecuta la función action_generate_aws_pdf que escribimos en el archivo res_partner.py del módulo.
+
+    La Petición: Odoo emite una señal hacia Internet buscando la IP de tu instancia de AWS (44.192.81.69) por el puerto 5000.
+
+    AWS Fargate/Docker: El contenedor recibe el HTML que Odoo le envía, usa su motor interno (wkhtmltopdf) para "dibujar" el PDF y lo envía de vuelta por el mismo camino.
+
+    El Resultado: Odoo recibe los datos binarios del PDF, los transforma a Base64 y crea un nuevo registro en la tabla de Adjuntos.
+
+    Feedback: En el "Chatter" (el historial de la derecha), aparecerá un mensaje automático diciendo: "✅ PDF generado exitosamente en AWS".
+
+3. Checklist para que el botón NO falle
+
+Para que cuando pulses el botón no te dé un error de "Connection Timeout", asegúrate de estos tres puntos (muy importantes para explicar a los alumnos):
+
+    Contenedor Vivo: En tu terminal de AWS, el comando docker ps debe mostrar que el contenedor api-pdf-odoo está en estado "Up".
+
+    Puerto Abierto: En el Security Group de AWS, la regla para el puerto 5000 debe estar activa para 0.0.0.0/0.
+
+    Librería Python: Tu Odoo local debe tener instalada la librería requests. Como usas Odoo 19 Community, es casi seguro que ya la tiene, pero si fallara, tendrías que hacer un pip install requests en el entorno donde corre tu Odoo.
