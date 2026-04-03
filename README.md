@@ -65,16 +65,7 @@ sudo dnf install git -y
 git clone https://github.com/santos-pardos/Odoo-DockerCompose.git
 ```
 
-### 3. Launch
-```
-cd Odoo-DockerCompose
-docker-compose up -d
-```
-```
-docker-compose build --no-cache && docker compose up
-```
-
-### 4. EC2 EIP
+### 3. EC2 EIP
 ```
 Assing an EIP to EC2 Odoo
 ```
@@ -83,9 +74,11 @@ http://EIP:8069
 ```
 Note: Open the 8069 port in the SG in EC2
 
-### 5. NGINX - Reverse Proxy
+### 4. NGINX - Reverse Proxy
 ```
 sudo dnf install nginx -y
+sudo systemctl start nginx
+sudo systemctl enable nginx
 ```
 ```
 sudo nano /etc/nginx/conf.d/odoo.conf
@@ -105,7 +98,14 @@ server {
 ```
 sudo systemctl restart nginx
 ```
-
+### 5. Launch
+```
+cd Odoo-DockerCompose
+docker-compose up -d
+```
+```
+docker-compose build --no-cache && docker compose up
+```
 ### 6. Stop
 ```
 docker-compose down
