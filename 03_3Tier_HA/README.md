@@ -74,6 +74,10 @@ docker run --rm -it \
   odoo:latest odoo -c /etc/odoo/odoo.conf -d odoo -i sale,stock,account --stop-after-init
 ```
 ```
+docker stop odoo
+docker start odoo
+```
+```
 Login user: admin
 Password user: admin
 ```
