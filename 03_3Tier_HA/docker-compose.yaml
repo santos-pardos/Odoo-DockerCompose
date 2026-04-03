@@ -15,11 +15,9 @@ services:
       - PASSWORD=A123456b
       - PORT=5432
     volumes:
-      # --- CAPA DE ALMACENAMIENTO COMPARTIDO (AWS EFS) ---
-      # 1. Datos dinámicos: Sesiones de usuario, fotos y PDFs (filestore)
+      # Conexión al almacenamiento AWS EFS
       - /mnt/efs/odoo_data:/var/lib/odoo
-      
-      # 2. Código: Módulos personalizados (como tu generador de PDF)
       - /mnt/efs/addons:/mnt/extra-addons
+      - /mnt/efs/config:/etc/odoo
 
 # No hay sección 'volumes:' abajo porque no usamos almacenamiento local de Docker
