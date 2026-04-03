@@ -1,3 +1,5 @@
+![alt text](Architecture.png)
+
 ## Tips
 
 1. docker-compose.yml
