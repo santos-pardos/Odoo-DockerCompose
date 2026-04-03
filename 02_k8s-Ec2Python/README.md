@@ -275,3 +275,39 @@ Si la integración ha sido un éxito, la página se refrescará ligeramente y ve
     En el historial (Chatter): En el panel derecho (o en la parte inferior, según el tamaño de tu monitor), verás un nuevo mensaje automático en el registro del cliente que dice: "✅ PDF generado exitosamente en AWS y guardado en adjuntos."
 
     El archivo PDF: En la parte superior derecha de la pantalla, busca el icono del clip de papel 📎 (Adjuntos). Verás que ahora marca que hay un documento. Haz clic en el clip y ahí estará tu archivo AWS_NombreDelCliente.pdf.
+
+## AWS IP Changed
+Paso 1: Averiguar tu nueva IP en AWS
+
+    Ve a la consola de AWS.
+
+    Entra en EC2 > Instancias.
+
+    Selecciona tu instancia y copia la nueva Dirección IPv4 pública que aparece en los detalles.
+
+Paso 2: Actualizar el código en Odoo
+
+Como ya tienes el módulo instalado en tu carpeta addons, vamos a editar el archivo directamente:
+
+    Ve a tu instalación de Odoo y entra en la ruta: addons/aws_pdf_generator/models/res_partner.py
+
+    Abre el archivo res_partner.py con cualquier editor de texto.
+
+    Localiza la línea 10, que dice así:
+    Python
+
+    url_aws = "http://44.192.81.69:5000/generar-pdf"
+
+    Cambia la IP antigua (44.192.81.69) por la nueva IP que acabas de copiar de AWS.
+
+    Guarda el archivo.
+
+Paso 3: Reiniciar Odoo (¡Muy importante!)
+
+Cuando cambias un archivo .xml en Odoo basta con actualizar la aplicación en el navegador, pero cuando cambias un archivo .py (código Python), debes reiniciar el servidor de Odoo obligatoriamente para que vuelva a leer el código en la memoria RAM.
+
+    Detén tu servidor Odoo y vuelve a iniciarlo (con Ctrl+C en la terminal, o con sudo service odoo restart si lo tienes como servicio de sistema).
+
+Paso 4: ¡Vuelve a probar!
+
+Entra en la ficha de tu cliente, haz clic en el botón de "Generar PDF (Nube AWS)" y esta vez la conexión volverá a funcionar perfectamente.
