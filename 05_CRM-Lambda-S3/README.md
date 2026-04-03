@@ -1,3 +1,5 @@
+## Tips
+
 1. El Formato de los Leads (JSON)
 
 Aunque Odoo permite importar archivos CSV, cuando trabajamos con integraciones automatizadas (Lambdas y APIs), el estándar indiscutible es JSON. Es un formato estructurado, ligero y que Python convierte nativamente en diccionarios (exactamente lo que Odoo necesita para crear registros).
