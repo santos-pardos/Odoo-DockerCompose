@@ -103,14 +103,10 @@ Si tus alumnos van a desplegar esto en su cuenta de AWS, hay dos configuraciones
     El Disparador (Trigger):
     Debes ir a la vista general de la Lambda y hacer clic en "Agregar desencadenador" (Add trigger). Seleccionas S3, eliges tu bucket odoousj y seleccionas el tipo de evento: PUT (Creación de objetos). Esto es lo que automatiza el proceso; le dice a AWS: "Cada vez que alguien ponga un archivo nuevo aquí, ejecuta este código Python inmediatamente".
 
-    ## Steps
-    Gemini ha dicho
 
-¡Esta es una de mis prácticas favoritas! Has subido el nivel de dificultad y estás entrando en lo que se conoce como Coreografía y Orquestación Serverless.
 
-Este escenario demuestra perfectamente cómo los sistemas modernos no esperan a que pasen las cosas de forma secuencial, sino que reaccionan a eventos (Event-Driven) y ejecutan tareas pesadas al mismo tiempo (en paralelo) para ahorrar tiempo.
+## Steps
 
-Aquí tienes la guía paso a paso, desde cero, para montar esta arquitectura en AWS y conectarla a tu Odoo.
 Paso 1: Crear las 2 Funciones Lambda (Los "Trabajadores")
 
 Primero necesitamos el código que se conectará a Odoo. Como solo subimos un PDF, vamos a programar las Lambdas para que "deduzcan" el nombre del empleado leyendo el nombre del archivo (por ejemplo, si subes Juan_Perez.pdf, crearán a "Juan Perez").
