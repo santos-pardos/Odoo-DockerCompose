@@ -1,3 +1,5 @@
+![alt text](Architecture.png)
+
 ## Labmda Enviroment variable
 ```
 ODOO_DB
