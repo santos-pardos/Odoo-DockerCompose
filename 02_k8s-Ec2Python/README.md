@@ -102,7 +102,7 @@ Para que AWS Fargate pueda ejecutar nuestra API sin que tengamos que instalar Py
 1. Crear el Dockerfile
 En la misma carpeta, crea un archivo llamado Dockerfile (sin extensión). Este archivo es la "receta" que instala Linux, Python, la herramienta de PDFs y nuestro código.
 Dockerfile
-
+```
  Usamos una imagen oficial de Python ligera
 FROM python:3.9-slim
 
@@ -124,7 +124,7 @@ EXPOSE 5000
 
 Arrancamos la aplicación usando Gunicorn para producción
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
-
+```
 2. Construir la imagen localmente
 Abre la terminal en la carpeta del proyecto y ejecuta el comando de construcción.
 Bash
