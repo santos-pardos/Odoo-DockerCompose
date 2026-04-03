@@ -31,3 +31,8 @@ Ejecutar el boton arriba a la derecha
 (Da error porque la IP del contenedor por el puerto 5000 ha cambiado, en res_partner.py cambiar la ip url_aws = "http://44.192.81.69:5000/generar-pdf")
 Parar Odoo, cambiar el fichero, lanzar Odoo y probar el generador de PDF.
 ```
+## K8s
+```
+kubectl apply -f .
+```
+
