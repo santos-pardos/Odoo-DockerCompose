@@ -1,3 +1,6 @@
+
+![alt text](Architecture.png)
+
 ## Tips
 
 1. El Formato de los Leads (JSON)
