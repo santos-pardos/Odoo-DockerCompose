@@ -62,3 +62,33 @@ docker compose up -d
 # 7. Asegurar permisos para el usuario ec2-user
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
+
+## Create Odoo with tables
+```
+sudo dnf install -y postgresql15
+```
+```
+docker run --rm -it \
+  -v odoo-data:/var/lib/odoo \
+  -v /home/ec2-user/odoo-pilot/odoo.conf:/etc/odoo/odoo.conf \
+  odoo:latest odoo -c /etc/odoo/odoo.conf -d odoo -i sale,stock,account --stop-after-init
+```
+
+## Delete Odoo Tables
+```
+psql -h odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com -U odoo -d odoo
+```
+```
+-- 1. Borrar todo el contenido (tablas, vistas, tipos)
+DROP SCHEMA public CASCADE;
+
+-- 2. Recrear el espacio vacío
+CREATE SCHEMA public;
+
+-- 3. Devolver permisos al usuario odoo
+GRANT ALL ON SCHEMA public TO odoo;
+GRANT ALL ON SCHEMA public TO public;
+
+-- 4. Salir
+\q
+```
