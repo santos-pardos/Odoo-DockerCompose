@@ -17,7 +17,7 @@ Cambiar la IP en el fichero odoo3.py de odoo y generador pdf
 Mirar en usuario administrator de Odoo el PDF
 ```
 
-## Modulo Odoo
+## Modulo cargado en Odoo
 ```
 Subir .zip a addons
 Descomprimirlo
