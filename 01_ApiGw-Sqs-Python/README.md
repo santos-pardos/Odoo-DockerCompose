@@ -203,7 +203,7 @@ if __name__ == "__main__":
 ```
 PASO 4: ¿Cómo lo ejecuto y lo pruebo?
 
-Para que los alumnos vean que funciona, sigue este orden:
+Para que ver que funciona, sigue este orden:
 
     En la terminal: Ejecuta el script de Python:
     python worker_odoo.py
@@ -216,7 +216,7 @@ Para que los alumnos vean que funciona, sigue este orden:
     -H "Content-Type: application/json" \
     -d '{"nombre": "Empresa Sistemas L2", "email": "info@sistemas.com"}'
 ```
-    Observa la magia:
+    Observa :
 
         La terminal donde corre el Python dirá instantáneamente: "Procesando pedido de: Empresa Sistemas L2".
 
