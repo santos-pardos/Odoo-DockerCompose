@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="mi_modulo_demo_record_1" model="mi.modulo.demo.record">
+        <field name="name">Registro demo 1</field>
+        <field name="description">Este registro se carga como dato demo.</field>
+        <field name="state">draft</field>
+        <field name="date_note">2026-03-23</field>
+        <field name="amount">100.0</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="mi_modulo_demo_record_2" model="mi.modulo.demo.record">
+        <field name="name">Registro demo 2</field>
+        <field name="description">Puedes usar el botón del formulario para marcarlo como hecho.</field>
+        <field name="state">done</field>
+        <field name="date_note">2026-03-23</field>
+        <field name="amount">250.0</field>
+        <field name="sequence">20</field>
+    </record>
+</odoo>

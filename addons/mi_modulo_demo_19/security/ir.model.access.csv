@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mi_modulo_demo_record_user,access.mi.modulo.demo.record.user,model_mi_modulo_demo_record,base.group_user,1,1,1,1

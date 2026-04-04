@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mi_modulo_demo_record_list" model="ir.ui.view">
+        <field name="name">mi.modulo.demo.record.list</field>
+        <field name="model">mi.modulo.demo.record</field>
+        <field name="arch" type="xml">
+            <list string="Registros Demo" default_order="sequence asc, id desc">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="date_note"/>
+                <field name="amount"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mi_modulo_demo_record_form" model="ir.ui.view">
+        <field name="name">mi.modulo.demo.record.form</field>
+        <field name="model">mi.modulo.demo.record</field>
+        <field name="arch" type="xml">
+            <form string="Registro Demo">
+                <header>
+                    <button name="action_mark_done"
+                            type="object"
+                            string="Marcar hecho"
+                            class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <button name="action_reset_draft"
+                            type="object"
+                            string="Volver a borrador"
+                            invisible="state == 'draft'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre del registro"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active"/>
+                            <field name="date_note"/>
+                            <field name="amount"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Descripción">
+                            <field name="description" placeholder="Escribe una descripción..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mi_modulo_demo_record_search" model="ir.ui.view">
+        <field name="name">mi.modulo.demo.record.search</field>
+        <field name="model">mi.modulo.demo.record</field>
+        <field name="arch" type="xml">
+            <search string="Buscar registros demo">
+                <field name="name"/>
+                <field name="state"/>
+                <filter name="filter_active" string="Activos" domain="[('active', '=', True)]"/>
+                <filter name="filter_done" string="Hechos" domain="[('state', '=', 'done')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mi_modulo_demo_record" model="ir.actions.act_window">
+        <field name="name">Registros Demo</field>
+        <field name="res_model">mi.modulo.demo.record</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mi_modulo_demo_record_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crea tu primer registro de ejemplo.
+            </p>
+            <p>
+                Este módulo es una base sencilla para aprender cómo se estructura un addon en Odoo 19.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_mi_modulo_demo_root" name="Demo Odoo 19" sequence="10"/>
+    <menuitem id="menu_mi_modulo_demo_record"
+              name="Registros"
+              parent="menu_mi_modulo_demo_root"
+              action="action_mi_modulo_demo_record"
+              sequence="20"/>
+</odoo>
