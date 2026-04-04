@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  odoo:
+    image: odoo:latest
+    container_name: odoo_app
+    restart: always
+    ports:
+      - "8069:8069"
+      - "8072:8072"
+    environment:
+      # --- CAPA DE BASE DE DATOS (AWS RDS) ---
+      - HOST=odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+      - USER=odoo
+      - PASSWORD=A123456b
+      - PORT=5432
+    volumes:
+      # Conexión al almacenamiento AWS EFS
+      - /mnt/efs/odoo_data:/var/lib/odoo
+      - /mnt/efs/addons:/mnt/extra-addons
+      - /mnt/efs/config:/etc/odoo
+
