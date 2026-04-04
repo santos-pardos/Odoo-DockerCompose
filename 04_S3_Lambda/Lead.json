@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Interés en Curso de Arquitectura Cloud",
+    "contact_name": "María García",
+    "email_from": "maria.garcia@ejemplo.com",
+    "phone": "+34 600 123 456",
+    "description": "Viene desde la campaña de LinkedIn."
+  },
+  {
+    "name": "Presupuesto para migración ERP",
+    "contact_name": "Carlos López",
+    "email_from": "carlos.lopez@empresa.com",
+    "phone": "+34 699 987 654",
+    "description": "Empresa de 50 empleados buscando pasar a la nube."
+  }
+]
