@@ -1,3 +1,5 @@
+![alt text](Architecture.png)
+
 ## CSV
 
 ¿Qué aspecto tiene el CSV?
