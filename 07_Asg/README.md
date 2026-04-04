@@ -1,4 +1,10 @@
 ![alt text](Architecture.png)
+## Create RDS Postgress 
+```
+User: odoo
+Password A123456b
+BBDD: odoo
+```
 
 ## user-data
 ```
