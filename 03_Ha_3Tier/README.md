@@ -211,3 +211,6 @@ docker compose up -d
 # 9. Permisos finales para la carpeta del proyecto
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
+## Login
+user/email: admin
+password: admin
