@@ -1,10 +1,11 @@
 ![alt text](Architecture.png)
-## Create RDS Postgress 
+## Create RDS Postgress (Get EndPoint)
 ```
 User: odoo
 Password A123456b
 BBDD: odoo
 ```
+## Create EFS (Get Endpoint)
 
 ## user-data
 ```
