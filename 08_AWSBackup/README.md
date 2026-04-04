@@ -1,3 +1,5 @@
+![alt text](Architecture.png)![alt text](Architecture.png)
+
 ## Steps
 Fase 1: S3 con Object Lock
 
