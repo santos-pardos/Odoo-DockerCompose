@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-web
+spec:
+  selector:
+    matchLabels:
+      app: odoo-web
+  template:
+    metadata:
+      labels:
+        app: odoo-web
+    spec:
+      securityContext:
+        runAsUser: 101
+        fsGroup: 101
+      containers:
+      - name: odoo
+        image: odoo:latest
+        env:
+        - name: HOST
+          value: "odoo-db"
+        - name: USER
+          value: "odoo"
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: odoo-db-secret
+              key: postgres-password
+        ports:
+        - containerPort: 8069
+        - containerPort: 8072
+        volumeMounts:
+        - name: odoo-data
+          mountPath: /var/lib/odoo
+        - name: odoo-config
+          mountPath: /etc/odoo/odoo.conf
+          subPath: odoo.conf
+      volumes:
+      - name: odoo-data
+        emptyDir: {} # Almacenamiento efímero
+      - name: odoo-config
+        configMap:
+          name: odoo-config

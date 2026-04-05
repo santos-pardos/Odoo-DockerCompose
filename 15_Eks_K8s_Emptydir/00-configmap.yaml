@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: odoo-config
+data:
+  odoo.conf: |
+    [options]
+    admin_passwd = admin
+    db_host = odoo-db
+    db_port = 5432
+    db_user = odoo
+    db_password = odoo_password
+    addons_path = /usr/lib/python3/dist-packages/odoo/addons
+    data_dir = /var/lib/odoo
+    proxy_mode = True
