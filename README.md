@@ -1,6 +1,7 @@
 ## Odoo Installation - Docker
 
 ## LABS
+```
 1. Desacoplo
 2. Microservicios
 3. Alta Disponibilidad
@@ -14,7 +15,7 @@
 11. CQRS
 12. Gen AI
 13. Multi Region
-
+```
 ### 1. Install Docker
 #### Ubuntu
 ```
