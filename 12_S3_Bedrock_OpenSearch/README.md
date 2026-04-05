@@ -115,9 +115,7 @@ La Prueba Final: Hablando con el Copiloto de Odoo
 
     "Hola, soy un empleado nuevo. Necesito devolver un portátil que me ha llegado roto. ¿Cómo lo hago en Odoo?"
 
-Lo que verán tus alumnos (La Magia del RAG):
-
-La IA no te dará una respuesta genérica sobre cómo funcionan las devoluciones en el mundo. Hará lo siguiente:
+La Magia del RA. La IA no te dará una respuesta genérica sobre cómo funcionan las devoluciones en el mundo. Hará lo siguiente:
 
     Convertirá tu pregunta en un vector.
 
