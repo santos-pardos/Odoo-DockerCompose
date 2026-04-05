@@ -1,6 +1,6 @@
 ## Odoo Installation - Docker
 
-## LABs
+## LABs - Arquitecturas Modernas / Integraciones
 ```
 0. Instalación
 1. Desacoplo
