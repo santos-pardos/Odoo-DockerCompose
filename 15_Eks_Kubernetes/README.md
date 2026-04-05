@@ -20,15 +20,18 @@ A. Montaje y Creación de Carpetas
 Bash
 
 Montar el disco
+```
 sudo mkdir -p /mnt/efs
 sudo mount -t efs fs-XXXXXXXX:/ /mnt/efs
+```
 
 Crear la estructura necesaria para los YAML
+```
 sudo mkdir -p /mnt/efs/addons
 sudo mkdir -p /mnt/efs/config
 sudo mkdir -p /mnt/efs/odoo-data
 sudo mkdir -p /mnt/efs/postgres-data
-
+```
 B. El archivo odoo.conf (Imprescindible)
 
 Crea el archivo en /mnt/efs/config/odoo.conf con este contenido exacto:
