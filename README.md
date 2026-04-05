@@ -2,22 +2,17 @@
 
 ## LABs - Arquitecturas Modernas / Integraciones
 
-| # | Labs |
-|---|------|
-| 0 | Instalación |
-| 1 | Desacoplo |
-| 2 | Microservicios |
-| 3 | Alta Disponibilidad |
-| 4 | Serverless |
-| 5 | Workflows |
-| 6 | Analítica |
-| 7 | Escalado |
-| 8 | Backup |
-| 9 | IoT |
-| 10 | AI |
-| 11 | CQRS |
-| 12 | Gen AI |
-| 13 | Multi Region |
+| # | Tema | # | Tema |
+|---|------|---|------|
+| 0 | Instalación | 8 | Backup |
+| 1 | Desacoplo | 9 | IoT |
+| 2 | Microservicios | 10 | AI |
+| 3 | Alta Disponibilidad | 11 | CQRS |
+| 4 | Serverless | 12 | Gen AI |
+| 5 | Workflows | 13 | Multi Region |
+| 6 | Analítica | 14 | Seguridad |
+| 7 | Escalado | | |
+
 
 ### 1. Install Docker
 #### Ubuntu
