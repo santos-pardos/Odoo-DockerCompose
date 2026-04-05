@@ -1,22 +1,24 @@
 ## Odoo Installation - Docker
 
 ## LABs - Arquitecturas Modernas / Integraciones
-```
-0. Instalación
-1. Desacoplo
-2. Microservicios
-3. Alta Disponibilidad
-4. Serverless
-5. Workflows
-6. Analitica
-7. Escalado
-8. Backup
-9. Iot
-10. AI
-11. CQRS
-12. Gen AI
-13. Multi Region
-```
+
+| # | Labs |
+|---|------|
+| 0 | Instalación |
+| 1 | Desacoplo |
+| 2 | Microservicios |
+| 3 | Alta Disponibilidad |
+| 4 | Serverless |
+| 5 | Workflows |
+| 6 | Analítica |
+| 7 | Escalado |
+| 8 | Backup |
+| 9 | IoT |
+| 10 | AI |
+| 11 | CQRS |
+| 12 | Gen AI |
+| 13 | Multi Region |
+
 ### 1. Install Docker
 #### Ubuntu
 ```
