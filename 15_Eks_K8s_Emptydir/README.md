@@ -21,3 +21,5 @@ Aquí tienes los fragmentos exactos que debes sustituir en tus archivos para que
 4 - 05-odoo-service.yaml
 
   Crea el Load Balancer en AWS para acceder por el puerto 80.
+
+
