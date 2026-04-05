@@ -11,7 +11,7 @@
 | 4 | Serverless | 12 | Gen AI |
 | 5 | Workflows | 13 | Multi Region |
 | 6 | Analítica | 14 | Seguridad |
-| 7 | Escalado | | | 15 EKS Kubernetes
+| 7 | Escalado | | | 15 EKS Kubernetes |
 
 
 ### 1. Install Docker
