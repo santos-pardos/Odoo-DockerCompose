@@ -157,7 +157,7 @@ Para que ver que funciona, sigue este orden:
     python worker_odoo.py
     (Verás el mensaje: "Worker conectado y esperando...")
 
-    A. Usa el HTML en un bucket de S3. Cambia la url del api gw.
+    A. Usa el HTML en un bucket de S3. Cambia la url del api gw. Rellena el formulario y dale enviar. Mira los datos en Odoo.
     B. Desde otra terminal (o usando Postman): Vamos a simular que un cliente compra en la web enviando un pedido a la API Gateway:
     Bash
 ```
