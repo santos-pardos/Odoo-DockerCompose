@@ -103,7 +103,7 @@ Ahora vamos a decirle a Odoo: "Cada vez que un comercial cambie un precio, dispa
 
     Te aparecerá el módulo correspondiente. Haz clic en Activar (o Instalar).
 
-Una vez que Odoo termine de cargar, vuelve a Ajustes > Técnico > Automatización.
+    Una vez que Odoo termine de cargar, vuelve a Ajustes > Técnico > Automatización.
 
     Ve a Ajustes > Técnico > Automatización > Acciones Automatizadas (Automated Actions).
 
@@ -115,15 +115,15 @@ Una vez que Odoo termine de cargar, vuelve a Ajustes > Técnico > Automatizació
 
         Desencadenante (Trigger): Al crear o actualizar (On Creation & Update).
 
-En el campo Acción a realizar (Action To Do), cambia "Ejecutar código Python" y selecciona Enviar Webhook (Send Webhook).
+    En el campo Acción a realizar (Action To Do), cambia "Ejecutar código Python" y selecciona Enviar Webhook (Send Webhook).
 
-Verás que la pantalla cambia y te pide nuevos datos:
+    Verás que la pantalla cambia y te pide nuevos datos:
 
     URL: Pega aquí la dirección de tu API Gateway de AWS (https://tu-api-id.execute-api.us-east-1.amazonaws.com/prod/sync).
 
     Campos (Fields): Odoo te permite elegir qué datos del producto quieres enviar a AWS. Añade los campos name (Nombre) y list_price (Precio de venta).
 
-Guarda la acción automatizada.
+    Guarda la acción automatizada.
 
 ¡La Prueba Final del Patrón CQRS!
 
