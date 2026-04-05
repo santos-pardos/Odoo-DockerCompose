@@ -159,18 +159,18 @@ Esta es tu "Caja de Herramientas de Supervivencia" para Odoo en Kubernetes. Hemo
     Ver logs previos: Si el pod acaba de morir, puedes ver su "testamento" con:
     ```
     kubectl logs <nombre-pod> --previous
-```
+    ```
     Reiniciar todo el stack: Para forzar que Odoo lea cambios en el odoo.conf del EFS:
-```
+    ```
     kubectl rollout restart deployment odoo-web
-```
+    ```
 Resumen de Permisos en EFS (La Regla de Oro)
 
-Si vas a empezar de cero, usa siempre estos permisos en la EC2:
+    Si vas a empezar de cero, usa siempre estos permisos en la EC2:
 ```
     addons/, config/, odoo-data/ → chown 101:101 y chmod 777.
-```
-```
+    ```
+    ```
     postgres-data/ → chown 999:999 y chmod 700 (o 777 si te da problemas, pero Postgres prefiere 700).
-```
+    ```
 Con esta lista guardada, tienes el 99% de los problemas de Odoo en Kubernetes bajo control. ¿Quieres que profundicemos en cómo automatizar estos respaldos de EFS para que tu piloto sea todavía más profesional?
