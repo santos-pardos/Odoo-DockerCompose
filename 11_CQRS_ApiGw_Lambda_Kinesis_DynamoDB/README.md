@@ -164,6 +164,18 @@ Finalmente, conectamos el ERP usando su función nativa de Webhooks para evitar 
 
     Entra a Odoo con el Modo Desarrollador activado.
 
+    Instalar el módulo de Automatización
+
+    Ve al menú principal de Odoo y entra en Aplicaciones (Apps).
+
+    En la barra de búsqueda de arriba, borra el filtro "Aplicaciones" (haz clic en la X de la etiqueta). Esto es crucial, porque si no lo borras, Odoo oculta los módulos técnicos.
+
+    Escribe en el buscador: base_automation (o "Automated Actions" / "Acciones automatizadas").
+
+    Te aparecerá el módulo correspondiente. Haz clic en Activar (o Instalar).
+
+Una vez que Odoo termine de cargar, vuelve a Ajustes > Técnico > Automatización.
+
     Ve a Ajustes > Técnico > Automatización > Acciones Automatizadas.
 
     Dale a Nuevo:
