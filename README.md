@@ -176,7 +176,7 @@ https://medium.com/@rajeshpachaikani/deploying-odoo-in-minutes-with-docker-compo
 
 ###  Install only with 2 Containers
 ```
-docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres:15
+docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres:latest
 ```
 ```
 docker run -t -p 8069:8069 --name odoo --link db:db -d odoo:latest
