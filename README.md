@@ -2,6 +2,10 @@
 
 ## LABs - Arquitecturas Modernas / Integraciones
 
+<table>
+<tr>
+<td>
+
 | # | Tema | # | Tema |
 |---|------|---|------|
 | 0 | Instalación | 8 | Backup |
@@ -13,6 +17,14 @@
 | 6 | Analítica | 14 | Seguridad |
 | 7 | Escalado | 15 | EKS Kubernetes |
 
+</td>
+<td>
+
+<img src="Architecture.png" width="500"/>
+
+</td>
+</tr>
+</table>
 
 ### 1. Install Docker
 #### Ubuntu
