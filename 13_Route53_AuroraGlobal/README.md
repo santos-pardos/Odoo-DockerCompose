@@ -106,7 +106,7 @@ Usa una herramienta web gratuita como Global Ping (o cualquier comprobador de DN
 
         Los servidores de prueba ubicados en Los Ángeles, Seattle o Asia resolverán la IP de Oregon.
 
-💡 Nota técnica importante para Odoo (Filestore)
+Nota técnica importante para Odoo (Filestore)
 
 En una arquitectura global real con Odoo, la base de datos no es lo único que se sincroniza. Odoo guarda las imágenes, facturas en PDF y sesiones de usuario en una carpeta física (filestore).
 Para que el empleado de Oregon vea la misma foto de perfil que subió el de Virginia, tendrías que mapear esa carpeta a Amazon S3 (usando módulos de la comunidad de Odoo para S3) y activar la Replicación entre Regiones (CRR) en S3.
