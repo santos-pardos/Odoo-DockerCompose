@@ -6,7 +6,10 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
+
 ## Create EFS (Copy Endpoint, change it twice in the fs-xxxxxxx variable in the user-data file)
+```
+```
 
 ## User-data - Ami Linux 2023
 ```
