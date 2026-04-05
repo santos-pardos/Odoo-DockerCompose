@@ -1,7 +1,8 @@
 ## Odoo Installation - Docker
 
-## LABS
+## LABs
 ```
+0. Instalación
 1. Desacoplo
 2. Microservicios
 3. Alta Disponibilidad
