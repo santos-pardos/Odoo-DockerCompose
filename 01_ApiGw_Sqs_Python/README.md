@@ -25,58 +25,6 @@ curl -X POST https://ci6oe0r1lb.execute-api.us-east-1.amazonaws.com/prod/pedido 
 }'
 ```
 
-## API GW - Edit integration request
-```
-AWS Region
-us-east-1
-```
-```
-AWS service
-Simple Queue Service (SQS)
-```
-```
-HTTP method
-POST
-```
-```
-Action type
-Use action name
-```
-```
-Action name
-SendMessage
-```
-```
-Execution role
-arn:aws:iam::658620698452:role/LabRole
-```
-```
-URL request headers parameters
-Name
-Content-Type
-Mapped from Info
-'application/x-www-form-urlencoded'
-Caching
-```
-```
-Mapping templates
-Content type
-application/json
-Generate template
-Template body
-Action=SendMessage&QueueUrl=https://sqs.us-east-1.amazonaws.com/658620698452/odoo&MessageBody=$util.urlEncode($input.body)
-```
-
-¿Qué tenemos ahora mismo configurado? 
-
-    Action type: Use action name -> SendMessage
-
-    HTTP Headers: Content-Type -> 'application/x-www-form-urlencoded'
-
-    Mapping Template (application/json): Action=SendMessage&QueueUrl=https://sqs.us-east-1.amazonaws.com/658620698452/odoo&MessageBody=$util.urlEncode($input.body)
-
-
-
 ## El Flujo de Trabajo
 
     Cliente: Envía un JSON con un pedido a una URL (API Gateway).
@@ -221,3 +169,54 @@ Para que ver que funciona, sigue este orden:
         La terminal donde corre el Python dirá instantáneamente: "Procesando pedido de: Empresa Sistemas L2".
 
         Entra en tu Odoo en la EC2, ve a Contactos y ¡verás que el nuevo cliente ha aparecido mágicamente sin que hayas tocado el ERP!
+
+## API GW - Edit integration request
+```
+AWS Region
+us-east-1
+```
+```
+AWS service
+Simple Queue Service (SQS)
+```
+```
+HTTP method
+POST
+```
+```
+Action type
+Use action name
+```
+```
+Action name
+SendMessage
+```
+```
+Execution role
+arn:aws:iam::658620698452:role/LabRole
+```
+```
+URL request headers parameters
+Name
+Content-Type
+Mapped from Info
+'application/x-www-form-urlencoded'
+Caching
+```
+```
+Mapping templates
+Content type
+application/json
+Generate template
+Template body
+Action=SendMessage&QueueUrl=https://sqs.us-east-1.amazonaws.com/658620698452/odoo&MessageBody=$util.urlEncode($input.body)
+```
+
+¿Qué tenemos ahora mismo configurado? 
+
+    Action type: Use action name -> SendMessage
+
+    HTTP Headers: Content-Type -> 'application/x-www-form-urlencoded'
+
+    Mapping Template (application/json): Action=SendMessage&QueueUrl=https://sqs.us-east-1.amazonaws.com/658620698452/odoo&MessageBody=$util.urlEncode($input.body)
+
