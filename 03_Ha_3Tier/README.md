@@ -75,7 +75,7 @@ chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
 
 
-## Primera version (no usar)
+## First Version (Don't use it)
 ### User-data 
 Note: Change RDS Endpoint in the user-data file
 ```
