@@ -157,7 +157,8 @@ Para que ver que funciona, sigue este orden:
     python worker_odoo.py
     (Verás el mensaje: "Worker conectado y esperando...")
 
-    Desde otra terminal (o usando Postman): Vamos a simular que un cliente compra en la web enviando un pedido a la API Gateway:
+    A. Usa el HTML en un bucket de S3. Cambia la url del api gw.
+    B. Desde otra terminal (o usando Postman): Vamos a simular que un cliente compra en la web enviando un pedido a la API Gateway:
     Bash
 ```
     curl -X POST https://tu-api-id.execute-api.us-east-1.amazonaws.com/prod/pedido \
