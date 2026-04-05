@@ -39,7 +39,7 @@ admin_passwd = admin_password_maestra
 db_host = odoo-db
 db_port = 5432
 db_user = odoo
-db_password = tu_password_segura
+db_password = A123456b
 addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
 data_dir = /var/lib/odoo
 proxy_mode = True
@@ -50,16 +50,21 @@ Como es un piloto y queremos evitar cualquier bloqueo de sistema, aplicamos los 
 Bash
 
 1. Asignar propietarios (101 para Odoo, 999 para Postgres)
+```
 sudo chown -R 101:101 /mnt/efs/addons /mnt/efs/config /mnt/efs/odoo-data
 sudo chown -R 999:999 /mnt/efs/postgres-data
-
-2. Dar permisos totales (Lectura, Escritura, Ejecución para todos)
+```
+3. Dar permisos totales (Lectura, Escritura, Ejecución para todos)```
+```
 sudo chmod -R 777 /mnt/efs/addons
 sudo chmod -R 777 /mnt/efs/config
 sudo chmod -R 777 /mnt/efs/odoo-data
 sudo chmod -R 777 /mnt/efs/postgres-data
-
-Nota: Postgres es muy delicado; si con 777 te da error en los logs, ponle chmod 700 /mnt/efs/postgres-data.
+```
+Nota: Postgres es muy delicado; si con 777 te da error en los logs, ponle 
+```
+chmod 700 /mnt/efs/postgres-data.
+```
 3. Resumen de ejecución (kubectl)
 
 Una vez que el EFS tiene las carpetas y el archivo de configuración, lanza tus archivos en este orden:
