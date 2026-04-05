@@ -70,7 +70,7 @@ def lambda_handler(event, context):
             'statusCode': 500,
             'body': json.dumps({'error': str(e)})
         }
-
+```
 Guárdalo y dale a Deploy.
 Fase 3: Amazon API Gateway (El Endpoint del Evento)
 
@@ -83,8 +83,8 @@ Fase 3: Amazon API Gateway (El Endpoint del Evento)
     Implementa (Deploy) la API en una etapa llamada prod.
 
     Copia la URL de Invocación (Terminará en /prod/sync).
-```
-(Nota para la clase: En un entorno de producción masivo real, este API Gateway no apuntaría directamente a Lambda, sino que empujaría el evento a Amazon Kinesis. Luego Kinesis iría alimentando a la Lambda a su propio ritmo. Para la demostración del laboratorio, pasamos directamente a Lambda por simplicidad de configuración).
+
+
 Fase 4: Odoo (El Disparador del Comando)
 
 Ahora vamos a decirle a Odoo: "Cada vez que un comercial cambie un precio, dispara un evento a AWS".
