@@ -252,3 +252,33 @@ Si pasas los datos por Kinesis, puedes conectar un servicio llamado Amazon Manag
     Caso de uso espectacular: Si de repente Odoo lanza eventos diciendo que el precio de 50 productos top ventas ha caído a 0,01€ (un error humano catastrófico), Flink puede detectar que hay una "anomalía de ventana de tiempo", bloquear el envío a DynamoDB y disparar una alarma al móvil del director de IT. ¡Has salvado al e-commerce de vender gratis antes de que el catálogo público se actualice!
 
 En resumen: Kinesis no es solo un tubo que evita saturaciones. Es la "Fuente de la Verdad" (Source of Truth) que orquesta a todos los sistemas de lectura de la empresa de forma segura, ordenada y escalable.
+
+## Tips
+
+Si DynamoDB puede absorber millones de escrituras por segundo, ¿por qué ponemos a Kinesis en medio? ¿Por qué no ir directamente de la Lambda a DynamoDB?
+
+La respuesta esconde tres "trampas" de la vida real en AWS:
+1. La Trampa del "Escalado Instantáneo" (Throttling)
+
+DynamoDB tiene dos modos: Provisionado (fijo) y Bajo Demanda (On-Demand).
+Si usas On-Demand, DynamoDB escala automáticamente, pero no instantáneamente desde cero a infinito. Su regla interna es que puede absorber inmediatamente el doble de tu pico histórico anterior.
+Si tu web normalmente recibe 100 actualizaciones por segundo, y de golpe en un solo segundo le inyectas 500.000 (porque alguien importó un Excel masivo en Odoo), DynamoDB te va a estrangular (Throttling) durante los primeros minutos hasta que escale sus particiones. Devolverá errores HTTP 429 Too Many Requests.
+2. Proteger a Odoo (El efecto "Backpressure")
+
+¿Qué pasa si DynamoDB devuelve ese error 429?
+Si tu arquitectura es Odoo -> API Gateway -> Lambda -> DynamoDB, el error "rebota" y viaja de vuelta hasta Odoo. El ERP se quedará esperando, reintentando, y la transacción de la base de datos PostgreSQL de Odoo se quedará bloqueada. ¡Podrías colgar el ERP de toda la empresa porque DynamoDB tardó 3 minutos en calentar sus motores!
+Con Kinesis, la Lambda de entrada solo empuja el mensaje al tubo y devuelve un HTTP 200 OK a Odoo en 10 milisegundos. Odoo cierra su transacción y sigue feliz. Si DynamoDB se estrangula, Kinesis simplemente espera pacientemente y lo reintenta sin molestar a Odoo.
+3. La Factura a Fin de Mes (Micro-Batching)
+
+DynamoDB cobra por millón de escrituras, lo cual es barato. Pero API Gateway y Lambda te cobran por cada invocación.
+
+    Sin Kinesis: 500.000 precios = 500.000 peticiones a API Gateway + 500.000 ejecuciones de Lambda individuales. (Más caro y propenso a agotar el límite de concurrencia de Lambdas de tu cuenta, que suele ser de 1.000 simultáneas).
+
+    Con Kinesis: Kinesis empaqueta los eventos. Puedes configurar la Lambda consumidora para que lea lotes de 1.000 en 1.000. El resultado: solo 500 ejecuciones de Lambda, que usarán la operación BatchWriteItem de DynamoDB. El coste cae en picado y la eficiencia de la red se dispara.
+
+4. Requisitos del Patrón CQRS Puro
+
+En la teoría estricta de CQRS y Event Sourcing, DynamoDB es tu "Vista Actual" (State), pero Kinesis es tu "Registro de Eventos" (Event Store).
+Si solo usas DynamoDB y un precio cambia 3 veces en un minuto, solo verás el último número. El historial de qué pasó, en qué orden y cuándo se ha perdido. Kinesis guarda ese historial inmutable, permitiéndote auditar o reconstruir los datos en el futuro.
+
+En resumen: No ponemos Kinesis porque DynamoDB sea débil, lo ponemos para proteger a Odoo de los rebotes, para no arruinarnos con las invocaciones de Lambda, y para absorber picos anómalos de "Cero a Cien" sin romper nada.
