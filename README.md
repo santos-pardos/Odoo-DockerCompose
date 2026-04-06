@@ -1,5 +1,3 @@
-## Odoo Installation - Docker
-
 ## LABs - Arquitecturas Modernas / Integraciones
 
 <table>
@@ -26,8 +24,8 @@
 </tr>
 </table>
 
-### 1. Install Docker
-#### Ubuntu
+## Odoo Installation - Docker
+### Ubuntu
 ```
 # Add Docker's official GPG key:
 sudo apt update
@@ -61,7 +59,7 @@ sudo apt install git -y
 
 
 
-#### AMI Linux 2023
+### AMI Linux 2023
 ```
 sudo dnf install docker -y
 sudo systemctl start docker
@@ -85,12 +83,12 @@ docker buildx version
 ```
 sudo dnf install git -y
 ```
-### 2. Clone Git Repository
+## 2. Clone Git Repository
 ```
 git clone https://github.com/santos-pardos/Odoo-DockerCompose.git
 ```
 
-### 3. EC2 EIP
+## 3. EC2 EIP
 ```
 Assing an EIP to EC2 Odoo
 ```
@@ -99,7 +97,7 @@ http://EIP:8069
 ```
 Note: Open the 8069 port in the SG in EC2
 
-### 4. NGINX - Reverse Proxy
+## 4. NGINX - Reverse Proxy
 ```
 sudo dnf install nginx -y
 sudo systemctl start nginx
@@ -123,7 +121,7 @@ server {
 ```
 sudo systemctl restart nginx
 ```
-### 5. Launch
+## 5. Launch
 ```
 cd Odoo-DockerCompose
 sudo chown -R $USER:$USER addons config sessions
@@ -132,12 +130,12 @@ docker-compose up -d
 ```
 docker-compose build --no-cache && docker compose up
 ```
-### 6. Stop
+## 6. Stop
 ```
 docker-compose down
 ```
 
-### 7. Tips
+## 7. Tips
 ```
 sudo chown -R $USER:$USER addons config sessions
 ```
@@ -145,12 +143,12 @@ sudo chown -R $USER:$USER addons config sessions
 docker logs <container_name>
 The actual log will also be at /etc/odoo/odoo.log inside the container
 ```
-### 8. DdBeaver
+## 8. DdBeaver
 ```
 docker run -d --network odoo-docker_default --name cloudbeaver --restart unless-stopped -p 8978:8978 -v /opt/cloudbeaver/workspace dbeaver/cloudbeaver:latest
 ```
 
-### 9. PSQL
+## 9. PSQL
 ```
 docker-compose ps
 docker-compose logs db
@@ -169,12 +167,12 @@ psql -U odoo -d postgres
 \dt ir_*
 \dt sale_*
 ```
-###  Links
+##  Links
 ```
 https://medium.com/@rajeshpachaikani/deploying-odoo-in-minutes-with-docker-compose-61a4d07b8877
 ```
 
-###  Install only with 2 Containers
+##  Installation only with 2 Containers
 ```
 docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres:latest
 ```
