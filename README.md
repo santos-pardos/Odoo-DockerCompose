@@ -81,9 +81,6 @@ curl -L https://github.com/docker/buildx/releases/download/v0.17.0/buildx-v0.17.
 chmod +x ~/.docker/cli-plugins/docker-buildx
 docker buildx version
 ```
-```
-sudo dnf install git -y
-```
 ## 2. Git Repository
 ```
 git clone https://github.com/santos-pardos/Odoo-DockerCompose.git
