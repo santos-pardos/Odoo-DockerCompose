@@ -24,8 +24,8 @@
 </tr>
 </table>
 
-## Odoo Installation - Docker
-### Ubuntu
+## Odoo Installation
+### Docker - Ubuntu
 ```
 # Add Docker's official GPG key:
 sudo apt update
@@ -59,7 +59,7 @@ sudo apt install git -y
 
 
 
-### AMI Linux 2023
+### AMI Linux 2023 - Docker
 ```
 sudo dnf install docker -y
 sudo systemctl start docker
@@ -83,7 +83,7 @@ docker buildx version
 ```
 sudo dnf install git -y
 ```
-## 2. Clone Git Repository
+## 2. Git Repository
 ```
 git clone https://github.com/santos-pardos/Odoo-DockerCompose.git
 ```
@@ -136,9 +136,6 @@ docker-compose down
 ```
 
 ## 7. Tips
-```
-sudo chown -R $USER:$USER addons config sessions
-```
 ```
 docker logs <container_name>
 The actual log will also be at /etc/odoo/odoo.log inside the container
