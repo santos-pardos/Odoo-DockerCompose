@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awsgenpdfodoo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: awsgenpdfodoo
+  template:
+    metadata:
+      labels:
+        app: awsgenpdfodoo
+    spec:
+      containers:
+      - name: awsgenpdfodoo
+        image: santospardos/usj:api-pdf-odoo
+        ports:
+        - containerPort: 5000
