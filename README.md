@@ -25,7 +25,7 @@
 </table>
 
 ## Odoo Installation
-### Docker - Ubuntu
+### EC2 Ubuntu - Docker
 ```
 # Add Docker's official GPG key:
 sudo apt update
@@ -59,8 +59,9 @@ sudo apt install git -y
 
 
 
-### AMI Linux 2023 - Docker
+### EC2 AMI Linux 2023 - Docker
 ```
+sudo dnf install git -y
 sudo dnf install docker -y
 sudo systemctl start docker
 sudo systemctl enable docker
