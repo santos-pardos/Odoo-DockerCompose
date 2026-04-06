@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: odoo-db # <--- ESTE ES EL NOMBRE QUE ODOO BUSCA
+spec:
+  ports:
+  - port: 5432
+    targetPort: 5432
+  selector:
+    app: odoo-db # <--- ESTO DEBE COINCIDIR CON LAS LABELS DEL DEPLOYMENT
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo-db
+  template:
+    metadata:
+      labels:
+        app: odoo-db
+    spec:
+      securityContext:
+        runAsUser: 999
+        runAsGroup: 999
+        fsGroup: 999
+      containers:
+      - name: postgres
+        image: postgres:15
+        env:
+        - name: POSTGRES_DB
+          value: postgres
+        - name: POSTGRES_USER
+          value: odoo
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: odoo-db-secret
+              key: postgresql-password
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: efs-db-storage
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres-data
+      volumes:
+      - name: efs-db-storage
+        persistentVolumeClaim:
+          claimName: odoo-efs-pvc
