@@ -108,6 +108,15 @@ sudo nano /etc/nginx/conf.d/odoo.conf
 server {
     listen 80;
 
+    # Ruta para /websocket → puerto 8072
+    location /websocket/ {
+        proxy_pass http://127.0.0.1:8072/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Resto → puerto 8069
     location / {
         proxy_pass http://127.0.0.1:8069;
         proxy_set_header Host $host;
