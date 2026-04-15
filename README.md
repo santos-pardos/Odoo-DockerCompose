@@ -178,12 +178,16 @@ psql -U odoo -d postgres
 https://medium.com/@rajeshpachaikani/deploying-odoo-in-minutes-with-docker-compose-61a4d07b8877
 ```
 
-##  Installation only with 2 Containers
+##  Install withoug docker-compose
 ```
 docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres:latest
 ```
 ```
 docker run -t -p 8069:8069 --name odoo --link db:db -d odoo:latest
+```
+## Install all with 3 containers
+```
+docker compose -f docker-compose-3-container.yaml up -d
 ```
 
 
