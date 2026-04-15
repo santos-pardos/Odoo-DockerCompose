@@ -185,7 +185,7 @@ docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=pos
 ```
 docker run -t -p 8069:8069 --name odoo --link db:db -d odoo:latest
 ```
-## Install all with 3 containers
+## Install with 3 containers (Odoo - Postgres - Nginx)
 ```
 docker compose -f docker-compose-3-container.yaml up -d
 ```
