@@ -11,7 +11,7 @@ Paso 1: Crear la tabla en DynamoDB (El almacén ultra-rápido)
 
     Deja los ajustes predeterminados y créala.
 
-    🚨 ¡Paso Crítico! Una vez creada, entra en la tabla, ve a la pestaña Exportaciones y secuencias (Exports and streams) y Activa DynamoDB Streams.
+    ¡Paso Crítico! Una vez creada, entra en la tabla, ve a la pestaña Exportaciones y secuencias (Exports and streams) y Activa DynamoDB Streams.
 
         Elige Imagen nueva (New image). Esto hará que cada vez que entre un Lead, DynamoDB lance una alerta con los datos nuevos.
 
