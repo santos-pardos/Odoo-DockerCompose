@@ -9,7 +9,31 @@ BBDD: odoo
 ```
  (Coge el ID del filesystem)
 ```
-
+## Parameter -Store
+```
+Abre Systems Manager.
+En el menú lateral, entra en Parameter Store.
+Pulsa Create parameter.
+Crea estos 3 parámetros, uno por uno. AWS permite nombres jerárquicos como /odoo/prod/db_user.
+Parámetro 1
+Name: /odoo/prod/db_user
+Description: Usuario de PostgreSQL para Odoo
+Tier: Standard
+Type: SecureString
+Value: odoo
+Parámetro 2
+Name: /odoo/prod/db_password
+Description: Password de PostgreSQL para Odoo
+Tier: Standard
+Type: SecureString
+Value: TU_PASSWORD_DB
+Parámetro 3
+Name: /odoo/prod/admin_passwd
+Description: Master password de Odoo
+Tier: Standard
+Type: SecureString
+Value: TU_MASTER_PASSWORD_ODOO
+```
 ## User-Data  --- IAM Role = LabInstaceProfile
 ```
  Cambia el FS ID y el Endpoint BBDD)
