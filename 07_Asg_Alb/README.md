@@ -5,7 +5,10 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
-## Create EFS  (Get Endpoint)
+## Create EFS 
+```
+ (Get Endpoint)
+```
 
 ## User-Data  --- IAM Role = LabInstaceProfile
 ```
