@@ -7,10 +7,13 @@ BBDD: odoo
 ```
 ## Create EFS 
 ```
- (Get Endpoint)
+ (Coge el ID del filesystem)
 ```
 
 ## User-Data  --- IAM Role = LabInstaceProfile
+```
+ Cambia el FS ID y el Endpoint BBDD)
+```
 ```
 #!/bin/bash
 set -euo pipefail
