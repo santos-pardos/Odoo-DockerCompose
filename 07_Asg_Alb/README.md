@@ -134,6 +134,11 @@ docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without
 docker restart odoo_piloto
 sleep 10
 ```
+## Login
+```
+user/email: admin
+password: admin
+```
 ## Borrar ficheros en caso de que no se vea bien la web
 ```
 docker exec -i odoo_piloto odoo shell -c /etc/odoo/odoo.conf -d odoo <<'PY'
@@ -224,8 +229,5 @@ docker compose up -d
 # 9. Permisos finales para la carpeta del proyecto
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
-## Login
-```
-user/email: admin
-password: admin
+
 ```
