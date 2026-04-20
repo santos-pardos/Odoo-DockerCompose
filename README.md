@@ -10,7 +10,7 @@
 |---|------|---|------|
 | 0 | Instalación | 8 | Backup |
 | 1 | Desacoplo | 9 | IoT |
-| 2 | Microservicios | 10 | AI |
+| 2 | Microservicios 2-3 Tier| 10 | AI |
 | 3 | Alta Disponibilidad | 11 | CQRS |
 | 4 | Serverless | 12 | Gen AI |
 | 5 | Workflows | 13 | Multi Region |
