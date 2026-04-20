@@ -1,4 +1,4 @@
-## AWS Academy + Odoo 19
+## AWS Academy + Odoo Academy
 
 ## LABs - Arquitecturas Modernas / Integraciones
 
