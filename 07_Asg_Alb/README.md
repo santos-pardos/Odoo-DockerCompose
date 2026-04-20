@@ -158,9 +158,18 @@ docker compose up -d
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
 ```
-## ALB 
+## ALB con ASG
 ```
 proxy_mode = True
+```
+## TG en ALB
+```
+Pon el health check así:
+Protocol: HTTP
+Port: traffic port
+Path: /web/login
+Success codes: 200-399
+No uses / si a veces te redirige raro o da 500 durante el arranque.
 ```
 ## Reiniciar Odoo BBDD la primera vez
 ```
