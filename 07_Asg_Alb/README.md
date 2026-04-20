@@ -30,7 +30,7 @@ Name: /odoo/prod/db_password
 Description: Password de PostgreSQL para Odoo
 Tier: Standard
 Type: SecureString
-Value: TU_PASSWORD_DB
+Value: A123456b
 ```
 ```
 Parámetro 3
@@ -38,7 +38,7 @@ Name: /odoo/prod/admin_passwd
 Description: Master password de Odoo
 Tier: Standard
 Type: SecureString
-Value: TU_MASTER_PASSWORD_ODOO
+Value: A123456b
 ```
 ## User-Data  --- IAM Role = LabInstaceProfile
 ```
