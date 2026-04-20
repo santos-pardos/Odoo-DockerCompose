@@ -130,7 +130,7 @@ db_port = ${DB_PORT}
 db_name = ${DB_NAME}
 http_port = 8069
 http_interface = 0.0.0.0
-proxy_mode = False
+proxy_mode = True
 list_db = False
 data_dir = /var/lib/odoo
 EOF
@@ -157,6 +157,10 @@ docker compose up -d
 
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
+```
+## ALB 
+```
+proxy_mode = True
 ```
 ## Reiniciar Odoo BBDD la primera vez
 ```
