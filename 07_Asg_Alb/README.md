@@ -158,6 +158,17 @@ docker compose up -d
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
 ```
+## Reiniciar Odoo BBDD la primera vez
+```
+docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
+docker restart odoo_piloto
+sleep 10
+```
+## Login
+```
+user/email: admin
+password: admin
+```
 ## ALB con ASG
 ```
 proxy_mode = True
@@ -171,17 +182,7 @@ Path: /web/login
 Success codes: 200-399
 No uses / si a veces te redirige raro o da 500 durante el arranque.
 ```
-## Reiniciar Odoo BBDD la primera vez
-```
-docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
-docker restart odoo_piloto
-sleep 10
-```
-## Login
-```
-user/email: admin
-password: admin
-```
+
 ## Borrar ficheros en caso de que no se vea bien la web
 ```
 docker exec -i odoo_piloto odoo shell -c /etc/odoo/odoo.conf -d odoo <<'PY'
