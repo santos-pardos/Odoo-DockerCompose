@@ -128,12 +128,14 @@ docker compose up -d
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
 ```
-## Reiniciar Odoo BBDD la primera vez - Borrar ficheros en caso de que no se vea bien la web
+## Reiniciar Odoo BBDD la primera vez
 ```
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
 docker restart odoo_piloto
 sleep 10
-
+```
+## Borrar ficheros en caso de que no se vea bien la web
+```
 docker exec -i odoo_piloto odoo shell -c /etc/odoo/odoo.conf -d odoo <<'PY'
 env.cr.execute("DELETE FROM ir_attachment WHERE url LIKE '/web/assets/%'")
 env.cr.commit()
@@ -143,6 +145,13 @@ PY
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -u web --stop-after-init
 docker restart odoo_piloto
 ```
+
+
+
+
+
+
+
 
 ## Create EFS - OLD (Get Endpoint)
 
