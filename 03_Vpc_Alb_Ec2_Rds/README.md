@@ -81,9 +81,6 @@ docker run --rm -it \
 
 # Lanzar Odoo
 ```
-docker compose up -d
-```
-```
 docker compose up -d --force-recreate
 ```
 # Permisos finales
