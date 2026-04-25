@@ -90,8 +90,20 @@ docker compose up -d --force-recreate
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
+# 9. Open public-ip
+```
+User: admin
+Password: admin
+```
+```
 
 
+
+
+
+
+
+```
 ## Old Versions (Don't use it)
 
 ## Create EFS (Copy Endpoint, change it twice in the fs-xxxxxxx variable in the user-data file)
