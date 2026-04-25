@@ -40,6 +40,7 @@ db_host = odoo3.cwaesfdjquns.us-east-1.rds.amazonaws.com
 db_user = odoo
 db_password = A123456b
 db_port = 5432
+db_sslmode = require
 http_port = 8069
 proxy_mode = True
 EOF
