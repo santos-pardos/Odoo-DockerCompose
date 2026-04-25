@@ -36,7 +36,7 @@ cd /home/ec2-user/odoo-pilot
 cat <<EOF > odoo.conf
 [options]
 admin_passwd = admin_master_pilot
-db_host = odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+db_host = odoo3.cwaesfdjquns.us-east-1.rds.amazonaws.com
 db_user = odoo
 db_password = A123456b
 db_port = 5432
@@ -56,7 +56,7 @@ services:
       - /opt/odoo-data:/var/lib/odoo
       - ./odoo.conf:/etc/odoo/odoo.conf
     environment:
-      - HOST=odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+      - HOST=odoo3.cwaesfdjquns.us-east-1.rds.amazonaws.com
       - USER=odoo
       - PASSWORD=A123456b
     restart: always
