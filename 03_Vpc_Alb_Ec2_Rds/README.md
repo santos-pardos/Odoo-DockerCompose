@@ -10,7 +10,7 @@ BBDD: odoo
 ```
 docker run --rm -it \
   -v /opt/odoo-data:/var/lib/odoo \
-  odoo:latest \
+  odoo:19 \
   odoo \
   -d odoo \
   -i base \
@@ -69,7 +69,7 @@ EOF
 cat <<EOF > docker-compose.yml
 services:
   odoo:
-    image: odoo:latest
+    image: odoo:19
     container_name: odoo_piloto
     ports:
       - "80:8069"
