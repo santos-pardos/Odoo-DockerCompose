@@ -7,7 +7,7 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
-## User data
+## User data para bastion host y EC2 privada
 ```
 #!/bin/bash
 
@@ -63,14 +63,20 @@ services:
     restart: always
 EOF
 ```
-##  Inicializando BBDD Odoo
+##  Inicializando BBDD Odoo desde Bastion Host
 ```
 cd odoo-pilot
+docker compose up -d
 ```
 ```
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
 ```
 ```
+docker compose down
+```
+
+```
+(no usar esta forma de reinicio)
 docker run --rm -it \
   -v /opt/odoo-data:/var/lib/odoo \
   -e HOST=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
@@ -85,20 +91,32 @@ docker run --rm -it \
   --without-demo=all \
   --stop-after-init
 ```
+## TG en ALB
+```
+Pon el health check así:
+Protocol: HTTP
+Port: traffic port
+Path Heath Checks: /web/login
+Success codes: 200-399
+```
 ##  Permisos finales
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
-##  Lanzar Odoo
+##  Lanzar Odoo en EC2 privada entrando por SSH desde bastion host
 ```
 docker compose up -d --force-recreate
 ```
-##  Open public-ip
+##  Open URL del ALB
 ```
 User: admin
 Password: admin
 ```
 ## Conexión ClI a Postgress
+```
+dnf install -y postgresql15
+psql "host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com port=5432 user=odoo dbname=odoo"
+```
 ```
 docker run --rm -it postgres:18 psql \
   "host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com port=5432 user=odoo dbname=odoo sslmode=require"
