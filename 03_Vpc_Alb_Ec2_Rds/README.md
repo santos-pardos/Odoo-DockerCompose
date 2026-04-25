@@ -78,14 +78,13 @@ docker run --rm -it \
   --without-demo=all \
   --stop-after-init
 ```
-
-##  Lanzar Odoo
-```
-docker compose up -d --force-recreate
-```
 ##  Permisos finales
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
+```
+##  Lanzar Odoo
+```
+docker compose up -d --force-recreate
 ```
 ##  Open public-ip
 ```
