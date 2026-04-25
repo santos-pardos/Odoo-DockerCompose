@@ -9,8 +9,11 @@
 User: odoo
 Password A123456b
 BBDD: odoo
+SG: SGPostgress
+VPC: odoo
+Subred: Privada BBDD
 ```
-## User data para bastion host y EC2 privada
+## User data para bastion host y EC2 privada. SGweb para ambas EC2
 ```
 #!/bin/bash
 
