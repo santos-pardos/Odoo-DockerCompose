@@ -1,4 +1,4 @@
-![alt text](Architecture.png)
+
 
 
 ## Create RDS Postgress (Copy Endpoint, change it in the db_host variable in the user-data file)
