@@ -105,11 +105,11 @@ Port: traffic port
 Path Heath Checks: /web/login
 Success codes: 200-399
 ```
-##  Permisos finales en carpeta de EC2 Privada
+##  Permisos finales en carpeta de EC2 Privada entrando por SSH desde bastion host
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
-##  Lanzar Odoo en EC2 privada entrando por SSH desde bastion host
+##  Lanzar Odoo en EC2 privada 
 ```
 docker compose up -d --force-recreate
 ```
