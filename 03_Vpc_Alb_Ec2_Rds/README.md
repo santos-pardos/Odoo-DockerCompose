@@ -10,15 +10,11 @@ BBDD: odoo
 ```
 docker run --rm -it \
   -v /opt/odoo-data:/var/lib/odoo \
+  -v /home/ec2-user/odoo-pilot/odoo.conf:/etc/odoo/odoo.conf:ro \
   odoo:19 \
-  odoo \
+  odoo -c /etc/odoo/odoo.conf \
   -d odoo \
   -i base \
-  --db_host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
-  --db_port=5432 \
-  --db_user=odoo \
-  --db_password='A123456b' \
-  --db_sslmode=require \
   --without-demo=all \
   --stop-after-init
 ```
@@ -82,10 +78,14 @@ services:
       - PASSWORD=A123456b
     restart: always
 EOF
-
+```
 # 7. Lanzar Odoo
+```
 docker compose up -d
-
+```
+```
+docker compose up -d --force-recreate
+```
 # 8. Permisos finales
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
