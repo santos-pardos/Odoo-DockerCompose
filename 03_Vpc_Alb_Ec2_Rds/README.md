@@ -70,11 +70,15 @@ cd odoo-pilot
 ```
 docker run --rm -it \
   -v /opt/odoo-data:/var/lib/odoo \
-  -v /home/ec2-user/odoo-pilot/odoo.conf:/etc/odoo/odoo.conf:ro \
+  -e HOST=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
+  -e PORT=5432 \
+  -e USER=odoo \
+  -e PASSWORD='A123456b' \
   odoo:19 \
-  odoo -c /etc/odoo/odoo.conf \
+  odoo \
   -d odoo \
   -i base \
+  --db_sslmode=require \
   --without-demo=all \
   --stop-after-init
 ```
