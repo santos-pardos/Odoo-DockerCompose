@@ -68,6 +68,9 @@ EOF
 cd odoo-pilot
 ```
 ```
+docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
+```
+```
 docker run --rm -it \
   -v /opt/odoo-data:/var/lib/odoo \
   -e HOST=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
