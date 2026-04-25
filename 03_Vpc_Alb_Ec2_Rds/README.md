@@ -9,7 +9,7 @@ BBDD: odoo
 ```
 ### Conexión ClI a Postgress
 ```
-docker run --rm -it postgres:16 psql \
+docker run --rm -it postgres:18 psql \
   "host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com port=5432 user=odoo dbname=odoo sslmode=require"
 ```
 ## User data
