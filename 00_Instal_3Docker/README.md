@@ -1,29 +1,3 @@
-## LABs - Arquitecturas Modernas / Integraciones
-
-<table>
-<tr>
-<td>
-
-| # | Tema | # | Tema |
-|---|------|---|------|
-| 0 | Instalación | 8 | Backup |
-| 1 | Desacoplo | 9 | IoT |
-| 2 | Microservicios 2-3 Tier| 10 | AI |
-| 3 | Alta Disponibilidad | 11 | CQRS |
-| 4 | Serverless | 12 | Gen AI |
-| 5 | Workflows | 13 | Multi Region |
-| 6 | Analítica | 14 | Seguridad |
-| 7 | Escalado | 15 | Kubernetes |
-
-</td>
-<td>
-
-<img src="Architecture.png" width="500"/>
-
-</td>
-</tr>
-</table>
-
 ## Odoo Installation
 
 ### EC2 AMI Linux 2023 - Docker
