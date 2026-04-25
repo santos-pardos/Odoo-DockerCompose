@@ -7,6 +7,21 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
+```
+docker run --rm -it \
+  -v /opt/odoo-data:/var/lib/odoo \
+  odoo:latest \
+  odoo \
+  -d odoo \
+  -i base \
+  --db_host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
+  --db_port=5432 \
+  --db_user=odoo \
+  --db_password='A123456b' \
+  --db_sslmode=require \
+  --without-demo=all \
+  --stop-after-init
+```
 ### Conexión ClI a Postgress
 ```
 docker run --rm -it postgres:18 psql \
