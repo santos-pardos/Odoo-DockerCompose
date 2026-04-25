@@ -1,6 +1,9 @@
 ![alt text](Architecture.png)
-
-
+## Crea 2 SG.
+```
+1 SGWeb para EC2 y ALB con port:80 abierto a todo el mundo.
+1 SGPostgress para RDS con port: 5432 abierto a SGWeb 
+```
 ## Create RDS Postgress (Copy Endpoint, change it in the db_host variable in the user-data file)
 ```
 User: odoo
@@ -99,7 +102,7 @@ Port: traffic port
 Path Heath Checks: /web/login
 Success codes: 200-399
 ```
-##  Permisos finales
+##  Permisos finales en carpeta de EC2 Privada
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
