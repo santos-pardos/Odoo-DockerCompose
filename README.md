@@ -62,7 +62,6 @@ Assing an EIP to EC2 Odoo
 ```
 http://EIP:8069
 ```
-Note: Open the 8069 port in the SG in EC2
 
 ## 4. NGINX - Reverse Proxy
 ```
