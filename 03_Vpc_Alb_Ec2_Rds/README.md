@@ -7,10 +7,72 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
+## User data
+```
+#!/bin/bash
+
+# 1. Actualizar e instalar Docker
+dnf update -y
+dnf install -y docker
+systemctl enable --now docker
+usermod -aG docker ec2-user
+
+# 2. Instalar Docker Compose V2
+mkdir -p /usr/local/lib/docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 \
+  -o /usr/local/lib/docker/cli-plugins/docker-compose
+chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+
+# 3. Preparar directorios locales para Odoo
+mkdir -p /opt/odoo-data
+chown -R 101:101 /opt/odoo-data
+chmod -R 775 /opt/odoo-data
+
+# 4. Preparar directorio de trabajo
+mkdir -p /home/ec2-user/odoo-pilot
+cd /home/ec2-user/odoo-pilot
+
+# 5. Crear odoo.conf
+cat <<EOF > odoo.conf
+[options]
+admin_passwd = admin_master_pilot
+db_host = odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+db_user = odoo
+db_password = A123456b
+db_port = 5432
+http_port = 8069
+proxy_mode = True
+EOF
+
+# 6. Crear docker-compose.yml sin EFS
+cat <<EOF > docker-compose.yml
+services:
+  odoo:
+    image: odoo:latest
+    container_name: odoo_piloto
+    ports:
+      - "80:8069"
+    volumes:
+      - /opt/odoo-data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+    environment:
+      - HOST=odoo.cfiy5oksqwsu.us-east-1.rds.amazonaws.com
+      - USER=odoo
+      - PASSWORD=A123456b
+    restart: always
+EOF
+
+# 7. Lanzar Odoo
+docker compose up -d
+
+# 8. Permisos finales
+chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
+```
+
+
+## Old Versions (Don't use it)
 
 ## Create EFS (Copy Endpoint, change it twice in the fs-xxxxxxx variable in the user-data file)
-```
-```
 
 ## User-data - Ami Linux 2023
 ```
@@ -78,8 +140,6 @@ docker compose up -d
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
 
-
-## First Version (Don't use it)
 ### User-data 
 Note: Change RDS Endpoint in the user-data file
 ```
