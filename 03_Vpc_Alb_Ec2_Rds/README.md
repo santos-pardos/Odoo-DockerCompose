@@ -45,7 +45,7 @@ http_port = 8069
 proxy_mode = True
 EOF
 
-# Crear docker-compose.yml sin EFS
+# Crear docker-compose.yml 
 cat <<EOF > docker-compose.yml
 services:
   odoo:
