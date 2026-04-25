@@ -63,7 +63,7 @@ services:
     restart: always
 EOF
 ```
-# Inicializando BBDD Odoo
+##  Inicializando BBDD Odoo
 ```
 cd odoo-pilot
 ```
@@ -79,20 +79,20 @@ docker run --rm -it \
   --stop-after-init
 ```
 
-# Lanzar Odoo
+##  Lanzar Odoo
 ```
 docker compose up -d --force-recreate
 ```
-# Permisos finales
+##  Permisos finales
 ```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
-# Open public-ip
+##  Open public-ip
 ```
 User: admin
 Password: admin
 ```
-### Conexión ClI a Postgress
+## Conexión ClI a Postgress
 ```
 docker run --rm -it postgres:18 psql \
   "host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com port=5432 user=odoo dbname=odoo sslmode=require"
