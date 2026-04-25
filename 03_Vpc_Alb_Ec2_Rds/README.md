@@ -87,6 +87,7 @@ docker compose up -d
 docker compose up -d --force-recreate
 ```
 # 8. Permisos finales
+```
 chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
 
