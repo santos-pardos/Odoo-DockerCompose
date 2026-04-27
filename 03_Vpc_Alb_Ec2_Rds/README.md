@@ -1,8 +1,9 @@
 ![alt text](Architecture.png)
-## Crea 2 SG.
+## Crea 3 SG.
 ```
 1 SGWeb para EC2 y ALB con port:80 abierto a todo el mundo.
-1 SGPostgress para RDS con port: 5432 abierto a SGWeb 
+1 SGPostgress para RDS con port: 5432 abierto a SGWeb
+1 SG BAstion host. puerto 22
 ```
 ## Create RDS Postgress (Copy Endpoint, change it in the db_host variable in the user-data file)
 ```
