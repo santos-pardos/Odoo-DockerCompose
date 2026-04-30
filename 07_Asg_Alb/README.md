@@ -193,10 +193,6 @@ docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without
 user/email: admin
 password: admin
 ```
-## ALB con ASG
-```
-proxy_mode = True
-```
 ## TG en ALB
 ```
 Pon el health check así:
