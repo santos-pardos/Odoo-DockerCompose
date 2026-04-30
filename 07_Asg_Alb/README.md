@@ -206,7 +206,24 @@ Path: /web/login
 Success codes: 200-399
 No uses / si a veces te redirige raro o da 500 durante el arranque.
 ```
-
+## PSQL
+```
+sudo dnf install postgresql15 -y
+psql --version
+```
+```
+psql \
+  --host=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
+  --port=5432 \
+  --dbname=odoo \
+  --username=odoo
+```
+```
+PGPASSWORD='A123456b' psql -h odoo-az.caaxnvj25w3n.us-east-1.rds.amazonaws.com -p 5432 -d odoo -U odoo
+```
+```
+SELECT datname FROM pg_database;
+```
 ## Borrar ficheros en caso de que no se vea bien la web
 ```
 docker exec -i odoo_piloto odoo shell -c /etc/odoo/odoo.conf -d odoo <<'PY'
