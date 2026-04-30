@@ -1,4 +1,4 @@
-![alt text](Architecture.png)
+![alt text](Architecture2.png)
 ## Crea 3 SG.
 ```
 1 SGWeb para EC2 y ALB con port:80 abierto a todo el mundo.
