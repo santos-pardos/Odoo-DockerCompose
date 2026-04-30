@@ -20,7 +20,7 @@ BBDD: odoo
 ```
 ## Create EFS 
 ```
- (Coge el ID del filesystem)
+
 ```
 ## Parameter -Store
 ```
