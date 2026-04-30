@@ -78,6 +78,7 @@ docker compose up -d
 ```
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
 ```
+##  Crear AMI Bastion Host. Lanzar EC2 red privada con la AMI. 
 
 ## TG en ALB
 ```
@@ -87,10 +88,8 @@ Port: traffic port
 Path Heath Checks: /web/login
 Success codes: 200-399
 ```
-##  Lanzar Odoo en EC2 privada 
-```
-docker compose up -d --force-recreate
-```
+## Crear ALB HTTP
+
 ##  Open URL del ALB
 ```
 User: admin
