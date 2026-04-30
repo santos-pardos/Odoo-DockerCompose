@@ -1,8 +1,8 @@
 ![alt text](Architecture.png)
 ## Create VPC Odoo
 ```
-CIDR: 10.40.0.0/16
-6 Subnets: 10.40.x.0/24
+CIDR: 10.0.0.0/16
+6 Subnets: 10.0.x.0/24
 1 NAT GW
 ```
 ## Create 4 SG
@@ -10,7 +10,7 @@ CIDR: 10.40.0.0/16
 SGec2: 22 y 80
 SGalb: 80
 SGefs: 2049
-SGPostgres: 5432
+SGpostgres: 5432
 ```
 ## Create RDS Postgress (Get EndPoint)
 ```
@@ -22,7 +22,7 @@ BBDD: odoo
 ```
 
 ```
-## Parameter -Store
+## Parameter Store
 ```
 Abre Systems Manager.
 En el menú lateral, entra en Parameter Store.
