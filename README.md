@@ -13,12 +13,12 @@ https://www.youtube.com/watch?v=ZQfb77BcYJA&list=PLr35b7rSarzh01uO_FYD0OQJ4Co2Z0
 |---|------|---|------|
 | 0 | Instalación | 8 | Backup |
 | 1 | Desacoplo | 9 | IoT |
-| 2 | Microservicios 2-3 Tier| 10 | AI |
-| 3 | Alta Disponibilidad | 11 | CQRS |
+| 2 | Microservicios| 10 | AI |
+| 3 | 3 Tier | 11 | CQRS |
 | 4 | Serverless | 12 | Gen AI |
 | 5 | Workflows | 13 | Multi Region |
 | 6 | Analítica | 14 | Seguridad |
-| 7 | Escalado | 15 | Kubernetes |
+| 7 | HA - Escalado | 15 | Kubernetes |
 
 </td>
 <td>
