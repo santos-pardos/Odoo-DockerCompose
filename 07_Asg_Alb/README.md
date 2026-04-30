@@ -53,9 +53,10 @@ Tier: Standard
 Type: SecureString
 Value: A123456b
 ```
-## User-Data  --- IAM Role = LabInstaceProfile
+## User-Data 
 ```
  Cambia el FS ID y el Endpoint BBDD)
+ IAM Instance Profile=LabInstanceProfile
 ```
 ```
 #!/bin/bash
