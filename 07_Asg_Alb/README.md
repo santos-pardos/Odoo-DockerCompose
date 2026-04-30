@@ -204,7 +204,6 @@ Protocol: HTTP
 Port: traffic port
 Path: /web/login
 Success codes: 200-399
-No uses / si a veces te redirige raro o da 500 durante el arranque.
 ```
 ## PSQL
 ```
