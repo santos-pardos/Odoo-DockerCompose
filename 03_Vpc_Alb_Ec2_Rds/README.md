@@ -14,7 +14,7 @@ SG: SGPostgress
 VPC: odoo
 Subred: Privada BBDD
 ```
-## User data para bastion host y EC2 privada. SGweb para ambas EC2
+## User data para bastion host y EC2 privada. (IAM Instance Profile=LabInstanceProfile)
 ```
 #!/bin/bash
 
