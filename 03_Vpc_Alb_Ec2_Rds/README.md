@@ -69,35 +69,16 @@ services:
       - PASSWORD=A123456b
     restart: always
 EOF
-```
-##  Inicializando BBDD Odoo desde Bastion Host
-```
+
+chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 cd odoo-pilot
 docker compose up -d
 ```
+##  Inicializando BBDD Odoo desde Bastion Host
 ```
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
 ```
-```
-docker compose down
-```
 
-```
-(no usar esta forma de reinicio)
-docker run --rm -it \
-  -v /opt/odoo-data:/var/lib/odoo \
-  -e HOST=odoo18.cwaesfdjquns.us-east-1.rds.amazonaws.com \
-  -e PORT=5432 \
-  -e USER=odoo \
-  -e PASSWORD='A123456b' \
-  odoo:19 \
-  odoo \
-  -d odoo \
-  -i base \
-  --db_sslmode=require \
-  --without-demo=all \
-  --stop-after-init
-```
 ## TG en ALB
 ```
 Pon el health check así:
@@ -105,10 +86,6 @@ Protocol: HTTP
 Port: traffic port
 Path Heath Checks: /web/login
 Success codes: 200-399
-```
-##  Permisos finales en carpeta de EC2 Privada entrando por SSH desde bastion host
-```
-chown -R ec2-user:ec2-user /home/ec2-user/odoo-pilot
 ```
 ##  Lanzar Odoo en EC2 privada 
 ```
