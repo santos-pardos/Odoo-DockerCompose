@@ -172,19 +172,19 @@ docker compose up -d
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
 ```
-## Reiniciar Odoo BBDD la primera vez desde el BH
+## Reiniciar Odoo BBDD la primera vez desde el Bastion Host
 ```
 docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
 ```
-## Crear AMI del BH.
+## Crear AMI del Bastion Host
 ```
 
 ```
-## Crear Lauch Template (LT= con AMI
+## Crear Lauch Template con la AMI 
 ```
 
 ```
-## Crear ASG con LT
+## Crear ASG con Launch Template
 ```
 
 ```
