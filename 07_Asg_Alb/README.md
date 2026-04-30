@@ -1,11 +1,23 @@
 ![alt text](Architecture.png)
+## Create VPC Odoo
+```
+CIDR: 10.40.0.0/16
+6 Subnets: 10.40.x.0/24
+1 NAT GW
+```
+## Create 4 SG
+```
+SGec2: 22 y 80
+SGalb: 80
+SGefs: 2049
+SGPostgres: 5432
+```
 ## Create RDS Postgress (Get EndPoint)
 ```
 User: odoo
 Password A123456b
 BBDD: odoo
 ```
-
 ## Create EFS 
 ```
  (Coge el ID del filesystem)
