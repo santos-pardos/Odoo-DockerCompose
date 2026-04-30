@@ -1,7 +1,10 @@
 ## AWS Academy + Odoo Academy
 
 ## LABs - Arquitecturas Modernas / Integraciones
-
+### Videos
+```
+https://www.youtube.com/watch?v=ZQfb77BcYJA&list=PLr35b7rSarzh01uO_FYD0OQJ4Co2Z04CM
+```
 <table>
 <tr>
 <td>
