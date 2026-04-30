@@ -5,12 +5,7 @@ User: odoo
 Password A123456b
 BBDD: odoo
 ```
-## Reiniciar Odoo BBDD la primera vez
-```
-docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
-docker restart odoo_piloto
-sleep 10
-```
+
 ## Create EFS 
 ```
  (Coge el ID del filesystem)
@@ -164,7 +159,24 @@ docker compose up -d
 # 10. Permisos finales
 chown -R ec2-user:ec2-user "${APP_DIR}"
 ```
+## Reiniciar Odoo BBDD la primera vez
+```
+docker exec -i odoo_piloto odoo -c /etc/odoo/odoo.conf -d odoo -i base --without-demo=all --stop-after-init
+docker restart odoo_piloto
+sleep 10
+```
+## Crear AMI del BH.
+```
 
+```
+## Crear Lauch Template (LT= con AMI
+```
+
+```
+## Crear ASG con LT
+```
+
+```
 ## Login
 ```
 user/email: admin
