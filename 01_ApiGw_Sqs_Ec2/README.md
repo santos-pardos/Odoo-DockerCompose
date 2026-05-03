@@ -24,6 +24,10 @@ curl -X POST https://ci6oe0r1lb.execute-api.us-east-1.amazonaws.com/prod/pedido 
   }
 }'
 ```
+## Odoo
+```
+Instala Odoo (3 contenedores) y los módulos de ventas y contactos.
+```
 
 ## El Flujo de Trabajo
 
