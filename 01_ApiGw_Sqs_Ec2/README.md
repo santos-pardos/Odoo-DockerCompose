@@ -94,6 +94,9 @@ Instala las librerías:
 sudo dnf install pip -y
 pip install boto3
 ```
+```
+aws configure
+```
 Crea el archivo worker_odoo.py:
 Python
 ```
