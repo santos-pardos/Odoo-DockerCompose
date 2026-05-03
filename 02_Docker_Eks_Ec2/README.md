@@ -213,7 +213,7 @@ Cuando entres en la ficha de cualquier cliente en la app de Contactos, verás en
 Si vas a la aplicación de Contactos y abres a cualquier persona o empresa, verás una barra gris en la parte superior (el "Header"). Ahí aparecerá un botón azul brillante con el texto: "Generar PDF (Nube AWS)" y un pequeño icono de una nube.
 2. ¿Qué ocurre técnicamente cuando haces clic?
 
-Cuando un alumno (o tú) pulse ese botón, se dispara el siguiente flujo arquitectónico:
+Cuando pulses ese botón, se dispara el siguiente flujo arquitectónico:
 
     Odoo (Local): Ejecuta la función action_generate_aws_pdf que escribimos en el archivo res_partner.py del módulo.
 
