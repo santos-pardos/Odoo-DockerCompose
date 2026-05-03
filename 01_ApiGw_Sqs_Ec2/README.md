@@ -91,6 +91,7 @@ Este script debe estar corriendo en tu ordenador (o en una EC2). Es el puente qu
 
 Instala las librerías:
 ```
+sudo dnf install pip -y
 pip install boto3
 ```
 Crea el archivo worker_odoo.py:
