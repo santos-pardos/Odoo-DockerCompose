@@ -104,153 +104,349 @@ import boto3
 import xmlrpc.client
 import json
 import time
+import traceback
 
-# 1. DATOS DE TU ODOO
+
+# ============================================================
+# 1. CONFIGURACIÓN DE ODOO
+# ============================================================
+
 ODOO_URL = 'http://TU_IP_PUBLICA_EC2'
 ODOO_DB = 'odoo'
 ODOO_USER = 'admin'
 ODOO_PASS = 'admin'
 
-# 2. DATOS DE TU AWS SQS
-QUEUE_URL = 'https://sqs.us-east-1.amazonaws.com/XXXXX/PedidosOdoo'
+
+# ============================================================
+# 2. CONFIGURACIÓN DE AWS SQS
+# ============================================================
+
+AWS_REGION = 'us-east-1'
+QUEUE_NAME = 'PedidosOdoo'
 
 
-def ejecutar_integracion():
-    sqs = boto3.client('sqs', region_name='us-east-1')
+# ============================================================
+# 3. FUNCIONES AUXILIARES
+# ============================================================
 
+def conectar_odoo():
     common = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/common')
     uid = common.authenticate(ODOO_DB, ODOO_USER, ODOO_PASS, {})
 
     if not uid:
-        raise Exception("No se pudo autenticar con Odoo. Revisa DB, usuario y contraseña/API key.")
+        raise Exception("No se pudo autenticar con Odoo. Revisa ODOO_DB, ODOO_USER y ODOO_PASS.")
 
     models = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/object')
+
+    print(f"✅ Conectado a Odoo con UID: {uid}")
+
+    return uid, models
+
+
+def conectar_sqs():
+    sqs = boto3.client('sqs', region_name=AWS_REGION)
+
+    response = sqs.get_queue_url(QueueName=QUEUE_NAME)
+    queue_url = response['QueueUrl']
+
+    print(f"✅ Conectado a SQS: {queue_url}")
+
+    return sqs, queue_url
+
+
+def obtener_campos_modelo(models, uid, modelo):
+    return models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        modelo,
+        'fields_get',
+        [],
+        {'attributes': ['string']}
+    )
+
+
+def buscar_o_crear_cliente(models, uid, nombre_cliente, email_cliente):
+    dominio = []
+
+    if email_cliente:
+        dominio = [['email', '=', email_cliente]]
+    else:
+        dominio = [['name', '=', nombre_cliente]]
+
+    clientes = models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        'res.partner',
+        'search',
+        [dominio],
+        {'limit': 1}
+    )
+
+    if clientes:
+        id_cliente = clientes[0]
+        print(f"ℹ️ Cliente ya existe con ID: {id_cliente}")
+        return id_cliente
+
+    valores_cliente = {
+        'name': nombre_cliente,
+        'email': email_cliente or False,
+        'customer_rank': 1,
+    }
+
+    id_cliente = models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        'res.partner',
+        'create',
+        [valores_cliente]
+    )
+
+    print(f"✅ Cliente creado con ID: {id_cliente}")
+
+    return id_cliente
+
+
+def buscar_o_crear_producto(
+    models,
+    uid,
+    nombre_producto,
+    precio_venta,
+    coste,
+    tipo,
+    referencia,
+    codigo_barras
+):
+    # Primero buscamos por referencia interna
+    if referencia:
+        productos = models.execute_kw(
+            ODOO_DB,
+            uid,
+            ODOO_PASS,
+            'product.template',
+            'search',
+            [[['default_code', '=', referencia]]],
+            {'limit': 1}
+        )
+
+        if productos:
+            id_producto_template = productos[0]
+            print(f"ℹ️ Producto ya existe con ID template: {id_producto_template}")
+            return id_producto_template
+
+    campos_producto = obtener_campos_modelo(models, uid, 'product.template')
+
+    valores_producto = {
+        'name': nombre_producto,
+        'list_price': float(precio_venta or 0),
+        'standard_price': float(coste or 0),
+        'default_code': referencia or False,
+        'sale_ok': True,
+        'purchase_ok': True,
+    }
+
+    # Tu Odoo ha dado error con detailed_type,
+    # por eso usamos type si existe.
+    if 'type' in campos_producto:
+        valores_producto['type'] = tipo or 'consu'
+    elif 'detailed_type' in campos_producto:
+        valores_producto['detailed_type'] = tipo or 'consu'
+
+    if 'barcode' in campos_producto and codigo_barras:
+        valores_producto['barcode'] = codigo_barras
+
+    id_producto_template = models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        'product.template',
+        'create',
+        [valores_producto]
+    )
+
+    print(f"✅ Producto creado con ID template: {id_producto_template}")
+
+    return id_producto_template
+
+
+def obtener_variante_producto(models, uid, id_producto_template):
+    producto_template = models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        'product.template',
+        'read',
+        [[id_producto_template]],
+        {'fields': ['product_variant_id']}
+    )
+
+    if not producto_template:
+        raise Exception("No se pudo leer el producto creado.")
+
+    product_variant_id = producto_template[0].get('product_variant_id')
+
+    if not product_variant_id:
+        raise Exception("El producto no tiene variante product.product.")
+
+    id_producto = product_variant_id[0]
+
+    print(f"✅ Variante product.product ID: {id_producto}")
+
+    return id_producto
+
+
+def crear_pedido_venta(models, uid, id_cliente, id_producto, precio_venta):
+    valores_pedido = {
+        'partner_id': id_cliente,
+        'order_line': [
+            (0, 0, {
+                'product_id': id_producto,
+                'product_uom_qty': 1,
+                'price_unit': float(precio_venta or 0),
+            })
+        ]
+    }
+
+    id_pedido = models.execute_kw(
+        ODOO_DB,
+        uid,
+        ODOO_PASS,
+        'sale.order',
+        'create',
+        [valores_pedido]
+    )
+
+    print(f"✅ Pedido de venta creado con ID: {id_pedido}")
+
+    return id_pedido
+
+
+def procesar_mensaje(models, uid, body):
+    print("📩 Mensaje recibido:")
+    print(body)
+
+    datos = json.loads(body)
+
+    contacto = datos.get('contacto', {})
+    producto = datos.get('producto', {})
+
+    nombre_cliente = contacto.get('nombre')
+    email_cliente = contacto.get('email')
+
+    nombre_producto = producto.get('nombre')
+    precio_venta = producto.get('precio_venta', 0)
+    coste = producto.get('coste', 0)
+    tipo = producto.get('tipo', 'consu')
+    referencia = producto.get('referencia')
+    codigo_barras = producto.get('codigo_barras')
+
+    if not nombre_cliente:
+        raise Exception("Falta contacto.nombre en el JSON.")
+
+    if not nombre_producto:
+        raise Exception("Falta producto.nombre en el JSON.")
+
+    print(f"📦 Procesando pedido de cliente: {nombre_cliente}")
+    print(f"🛒 Producto: {nombre_producto}")
+
+    id_cliente = buscar_o_crear_cliente(
+        models=models,
+        uid=uid,
+        nombre_cliente=nombre_cliente,
+        email_cliente=email_cliente
+    )
+
+    id_producto_template = buscar_o_crear_producto(
+        models=models,
+        uid=uid,
+        nombre_producto=nombre_producto,
+        precio_venta=precio_venta,
+        coste=coste,
+        tipo=tipo,
+        referencia=referencia,
+        codigo_barras=codigo_barras
+    )
+
+    id_producto = obtener_variante_producto(
+        models=models,
+        uid=uid,
+        id_producto_template=id_producto_template
+    )
+
+    id_pedido = crear_pedido_venta(
+        models=models,
+        uid=uid,
+        id_cliente=id_cliente,
+        id_producto=id_producto,
+        precio_venta=precio_venta
+    )
+
+    return id_pedido
+
+
+# ============================================================
+# 4. WORKER PRINCIPAL
+# ============================================================
+
+def ejecutar_integracion():
+    sqs, queue_url = conectar_sqs()
+    uid, models = conectar_odoo()
 
     print("🚀 Worker conectado y esperando mensajes...")
 
     while True:
-        response = sqs.receive_message(
-            QueueUrl=QUEUE_URL,
-            MaxNumberOfMessages=1,
-            WaitTimeSeconds=10
-        )
+        try:
+            response = sqs.receive_message(
+                QueueUrl=queue_url,
+                MaxNumberOfMessages=1,
+                WaitTimeSeconds=10,
+                VisibilityTimeout=60
+            )
 
-        if 'Messages' in response:
-            for msg in response['Messages']:
+            mensajes = response.get('Messages', [])
+
+            if not mensajes:
+                continue
+
+            for msg in mensajes:
+                receipt_handle = msg['ReceiptHandle']
+                body = msg['Body']
+
                 try:
-                    print("📩 Mensaje recibido:")
-                    print(msg['Body'])
+                    id_pedido = procesar_mensaje(models, uid, body)
 
-                    datos = json.loads(msg['Body'])
-
-                    contacto = datos.get('contacto', {})
-                    producto = datos.get('producto', {})
-
-                    nombre_cliente = contacto.get('nombre')
-                    email_cliente = contacto.get('email')
-
-                    nombre_producto = producto.get('nombre')
-                    precio_venta = producto.get('precio_venta', 0)
-                    coste = producto.get('coste', 0)
-                    tipo = producto.get('tipo', 'consu')
-                    referencia = producto.get('referencia')
-                    codigo_barras = producto.get('codigo_barras')
-
-                    if not nombre_cliente:
-                        raise Exception("Falta contacto.nombre en el JSON")
-
-                    if not nombre_producto:
-                        raise Exception("Falta producto.nombre en el JSON")
-
-                    print(f"📦 Procesando pedido de: {nombre_cliente}")
-
-                    # 1. Crear cliente
-                    id_cliente = models.execute_kw(
-                        ODOO_DB,
-                        uid,
-                        ODOO_PASS,
-                        'res.partner',
-                        'create',
-                        [{
-                            'name': nombre_cliente,
-                            'email': email_cliente or False,
-                            'customer_rank': 1
-                        }]
-                    )
-
-                    print(f"✅ Cliente creado con ID: {id_cliente}")
-
-                    # 2. Crear producto
-                    id_producto_template = models.execute_kw(
-                        ODOO_DB,
-                        uid,
-                        ODOO_PASS,
-                        'product.template',
-                        'create',
-                        [{
-                            'name': nombre_producto,
-                            'list_price': precio_venta,
-                            'standard_price': coste,
-                            'detailed_type': tipo,
-                            'default_code': referencia or False,
-                            'barcode': codigo_barras or False,
-                        }]
-                    )
-
-                    print(f"✅ Producto creado con ID template: {id_producto_template}")
-
-                    # 3. Obtener la variante real product.product
-                    producto_template = models.execute_kw(
-                        ODOO_DB,
-                        uid,
-                        ODOO_PASS,
-                        'product.template',
-                        'read',
-                        [[id_producto_template]],
-                        {'fields': ['product_variant_id']}
-                    )
-
-                    id_producto = producto_template[0]['product_variant_id'][0]
-
-                    print(f"✅ Variante de producto ID: {id_producto}")
-
-                    # 4. Crear pedido de venta
-                    id_pedido = models.execute_kw(
-                        ODOO_DB,
-                        uid,
-                        ODOO_PASS,
-                        'sale.order',
-                        'create',
-                        [{
-                            'partner_id': id_cliente,
-                            'order_line': [(0, 0, {
-                                'product_id': id_producto,
-                                'product_uom_qty': 1,
-                                'price_unit': precio_venta,
-                            })]
-                        }]
-                    )
-
-                    print(f"✅ Pedido de venta creado con ID: {id_pedido}")
-
-                    # 5. Borrar mensaje de SQS
                     sqs.delete_message(
-                        QueueUrl=QUEUE_URL,
-                        ReceiptHandle=msg['ReceiptHandle']
+                        QueueUrl=queue_url,
+                        ReceiptHandle=receipt_handle
                     )
 
-                    print("🗑️ Mensaje eliminado de SQS")
+                    print(f"🗑️ Mensaje eliminado de SQS. Pedido Odoo ID: {id_pedido}")
+                    print("-" * 60)
 
                 except Exception as e:
                     print("❌ Error procesando mensaje:")
                     print(e)
+                    print("Traceback:")
+                    traceback.print_exc()
                     print("Mensaje completo:")
-                    print(msg.get('Body'))
+                    print(body)
 
-                    # De momento NO borro el mensaje si falla,
-                    # para que puedas revisarlo o reintentarlo.
+                    # No borramos el mensaje si falla.
+                    # SQS lo volverá a entregar tras el VisibilityTimeout.
+                    print("⚠️ El mensaje NO se ha borrado de SQS.")
+                    print("-" * 60)
 
-        time.sleep(1)
+        except KeyboardInterrupt:
+            print("🛑 Worker detenido manualmente.")
+            break
+
+        except Exception as e:
+            print("❌ Error general del worker:")
+            print(e)
+            traceback.print_exc()
+            time.sleep(5)
 
 
 if __name__ == "__main__":
