@@ -79,9 +79,20 @@ Aquí crearemos la URL que recibirá los datos.
 
         Action Name: SendMessage.
 
-    Mapping Templates: Dentro de la pestaña "Integration Request", ve abajo a "Mapping Templates". Añade uno de tipo application/json y pega esto:
-    Action=SendMessage&MessageBody=$input.body
-    (Esto le dice al API que lo que reciba por JSON lo meta tal cual en el cuerpo del mensaje de SQS).
+        URL request headers parameters
+        Name
+        Content-Type
+        Mapped from Info
+        'application/x-www-form-urlencoded'
+        Caching
+        
+        
+        Mapping templates
+        Content type
+        application/json
+        Generate template
+        Template body
+        Action=SendMessage&QueueUrl=https://sqs.us-east-1.amazonaws.com/658620698452/odoo&MessageBody=$util.urlEncode($input.body)
 
     Dale a Deploy API, crea un Stage llamado prod y copia la Invoke URL.
 
