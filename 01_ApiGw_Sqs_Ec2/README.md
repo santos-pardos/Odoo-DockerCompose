@@ -105,54 +105,153 @@ import xmlrpc.client
 import json
 import time
 
-# 1. DATOS DE TU ODOO (EN EC2)
-ODOO_URL = 'http://TU_IP_PUBLICA_EC2:8069'
-ODOO_DB = 'tu_base_datos'
-ODOO_USER = 'tu_email@ejemplo.com'
-ODOO_PASS = 'tu_password_o_api_key'
+# 1. DATOS DE TU ODOO
+ODOO_URL = 'http://TU_IP_PUBLICA_EC2'
+ODOO_DB = 'odoo'
+ODOO_USER = 'admin'
+ODOO_PASS = 'admin'
 
 # 2. DATOS DE TU AWS SQS
 QUEUE_URL = 'https://sqs.us-east-1.amazonaws.com/XXXXX/PedidosOdoo'
 
+
 def ejecutar_integracion():
-    # Conexión con AWS
     sqs = boto3.client('sqs', region_name='us-east-1')
-    
-    # Conexión con Odoo
+
     common = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/common')
     uid = common.authenticate(ODOO_DB, ODOO_USER, ODOO_PASS, {})
+
+    if not uid:
+        raise Exception("No se pudo autenticar con Odoo. Revisa DB, usuario y contraseña/API key.")
+
     models = xmlrpc.client.ServerProxy(f'{ODOO_URL}/xmlrpc/2/object')
 
     print("🚀 Worker conectado y esperando mensajes...")
 
     while True:
-        # Consultar si hay mensajes en la cola
         response = sqs.receive_message(
             QueueUrl=QUEUE_URL,
             MaxNumberOfMessages=1,
-            WaitTimeSeconds=10 # Espera activa (ahorra dinero)
+            WaitTimeSeconds=10
         )
 
         if 'Messages' in response:
             for msg in response['Messages']:
-                # Leer el JSON que llegó de la API
-                datos = json.loads(msg['Body'])
-                nombre = datos.get('nombre')
-                email = datos.get('email')
+                try:
+                    print("📩 Mensaje recibido:")
+                    print(msg['Body'])
 
-                # Crear el cliente en Odoo
-                print(f"📦 Procesando pedido de: {nombre}")
-                id_cliente = models.execute_kw(ODOO_DB, uid, ODOO_PASS, 'res.partner', 'create', [{
-                    'name': nombre,
-                    'email': email
-                }])
+                    datos = json.loads(msg['Body'])
 
-                print(f"✅ Cliente creado en Odoo EC2 con ID: {id_cliente}")
+                    contacto = datos.get('contacto', {})
+                    producto = datos.get('producto', {})
 
-                # Borrar el mensaje de la cola para que no se repita
-                sqs.delete_message(QueueUrl=QUEUE_URL, ReceiptHandle=msg['ReceiptHandle'])
-        
+                    nombre_cliente = contacto.get('nombre')
+                    email_cliente = contacto.get('email')
+
+                    nombre_producto = producto.get('nombre')
+                    precio_venta = producto.get('precio_venta', 0)
+                    coste = producto.get('coste', 0)
+                    tipo = producto.get('tipo', 'consu')
+                    referencia = producto.get('referencia')
+                    codigo_barras = producto.get('codigo_barras')
+
+                    if not nombre_cliente:
+                        raise Exception("Falta contacto.nombre en el JSON")
+
+                    if not nombre_producto:
+                        raise Exception("Falta producto.nombre en el JSON")
+
+                    print(f"📦 Procesando pedido de: {nombre_cliente}")
+
+                    # 1. Crear cliente
+                    id_cliente = models.execute_kw(
+                        ODOO_DB,
+                        uid,
+                        ODOO_PASS,
+                        'res.partner',
+                        'create',
+                        [{
+                            'name': nombre_cliente,
+                            'email': email_cliente or False,
+                            'customer_rank': 1
+                        }]
+                    )
+
+                    print(f"✅ Cliente creado con ID: {id_cliente}")
+
+                    # 2. Crear producto
+                    id_producto_template = models.execute_kw(
+                        ODOO_DB,
+                        uid,
+                        ODOO_PASS,
+                        'product.template',
+                        'create',
+                        [{
+                            'name': nombre_producto,
+                            'list_price': precio_venta,
+                            'standard_price': coste,
+                            'detailed_type': tipo,
+                            'default_code': referencia or False,
+                            'barcode': codigo_barras or False,
+                        }]
+                    )
+
+                    print(f"✅ Producto creado con ID template: {id_producto_template}")
+
+                    # 3. Obtener la variante real product.product
+                    producto_template = models.execute_kw(
+                        ODOO_DB,
+                        uid,
+                        ODOO_PASS,
+                        'product.template',
+                        'read',
+                        [[id_producto_template]],
+                        {'fields': ['product_variant_id']}
+                    )
+
+                    id_producto = producto_template[0]['product_variant_id'][0]
+
+                    print(f"✅ Variante de producto ID: {id_producto}")
+
+                    # 4. Crear pedido de venta
+                    id_pedido = models.execute_kw(
+                        ODOO_DB,
+                        uid,
+                        ODOO_PASS,
+                        'sale.order',
+                        'create',
+                        [{
+                            'partner_id': id_cliente,
+                            'order_line': [(0, 0, {
+                                'product_id': id_producto,
+                                'product_uom_qty': 1,
+                                'price_unit': precio_venta,
+                            })]
+                        }]
+                    )
+
+                    print(f"✅ Pedido de venta creado con ID: {id_pedido}")
+
+                    # 5. Borrar mensaje de SQS
+                    sqs.delete_message(
+                        QueueUrl=QUEUE_URL,
+                        ReceiptHandle=msg['ReceiptHandle']
+                    )
+
+                    print("🗑️ Mensaje eliminado de SQS")
+
+                except Exception as e:
+                    print("❌ Error procesando mensaje:")
+                    print(e)
+                    print("Mensaje completo:")
+                    print(msg.get('Body'))
+
+                    # De momento NO borro el mensaje si falla,
+                    # para que puedas revisarlo o reintentarlo.
+
         time.sleep(1)
+
 
 if __name__ == "__main__":
     ejecutar_integracion()
