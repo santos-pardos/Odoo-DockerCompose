@@ -12,10 +12,6 @@
 ```
 
 ```
-![alt text](Desacoplo03.png)
-```
-
-```
 ![alt text](2Tier-RDS.png)
 ```
 
