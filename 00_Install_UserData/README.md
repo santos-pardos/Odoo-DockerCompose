@@ -1,35 +1,35 @@
 ## Otras arquitecturas
 
-![alt text](/arcg/Monolito.png)
+![alt text](/arch/Monolito.png)
 ```
 
 ```
-![alt text](/arcg/Desacoplo.png)
+![alt text](/arch/Desacoplo.png)
 ```
 
 ```
-![alt text](/arcg/Desacoplo02.png)
+![alt text](/arch/Desacoplo02.png)
 ```
 
 ```
-![alt text](/arcg/Desacoplo03.png)
+![alt text](/arch/Desacoplo03.png)
 ```
 
 ```
-![alt text](/arcg/2Tier-RDS.png)
+![alt text](/arch/2Tier-RDS.png)
 ```
 
 ```
-![alt text](/arcg/2Tier-RDSHA.png)
+![alt text](/arch/2Tier-RDSHA.png)
 ```
 
 ```
-![alt text](/arcg/2Tier-HA-ASG.png)
+![alt text](/arch/2Tier-HA-ASG.png)
 ```
 
 ```
-![alt text](/arcg/3Tier-RDS.png)
+![alt text](/arch/3Tier-RDS.png)
 ```
 
 ```
-![alt text](/arcg/3Tier-HA-ASG.png)
+![alt text](/arch/3Tier-HA-ASG.png)
