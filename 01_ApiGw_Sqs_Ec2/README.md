@@ -1,5 +1,5 @@
 
-![alt text](Architecture.png)
+![alt text](Architecture2.png)
 ```
 curl -X POST https://ci6oe0r1lb.execute-api.us-east-1.amazonaws.com/prod/pedido \
 -H "Content-Type: application/json" \
