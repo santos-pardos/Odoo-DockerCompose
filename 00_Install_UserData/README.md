@@ -1,6 +1,6 @@
 ## Otras arquitecturas
 
-![alt text](/arch/Monolito.png)
+![alt text](arch/Monolito.png)
 ```
 
 ```
