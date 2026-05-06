@@ -12,6 +12,10 @@
 ```
 
 ```
+![alt text](2Tier.png)
+```
+
+```
 ![alt text](2Tier-RDS.png)
 ```
 
