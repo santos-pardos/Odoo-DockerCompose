@@ -1,4 +1,4 @@
-![alt text](Architecture.png)
+![alt text](Architecture2.png)
 
 ## Steps
 Paso 1: Crear la tabla en DynamoDB (El almacén ultra-rápido)
