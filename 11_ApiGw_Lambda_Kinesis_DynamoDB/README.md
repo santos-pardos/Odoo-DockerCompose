@@ -1,4 +1,4 @@
-![alt text](Architecture.png)
+![alt text](Architecture2.png)
 Esta es la arquitectura B2C masiva. Odoo Webhook -> API Gateway -> Lambda Productora -> Kinesis -> Lambda Consumidora -> DynamoDB.
 
 ## Steps
