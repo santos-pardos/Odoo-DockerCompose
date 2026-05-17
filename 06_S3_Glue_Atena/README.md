@@ -86,43 +86,78 @@ Nota: AWS Glue lee las cabeceras de tu CSV. En mis ejemplos uso los nombres de c
 
 Borra el código que haya en el Editor de Athena y prueba estas consultas de Nivel Experto:
 
-1. El Top 5 de Mejores Clientes (Quién nos compra más)
 SQL
-```
-SELECT 
-    partner_id AS "Cliente", 
-    COUNT(*) AS "Número de Pedidos", 
-    SUM(CAST(amount_total AS DOUBLE)) AS "Volumen Total (€)"
-FROM ventas_crm
-WHERE state = 'sale' OR state = 'done' -- Solo pedidos confirmados
-GROUP BY partner_id
-ORDER BY "Volumen Total (€)" DESC
-LIMIT 5;
-```
-
-2. Rendimiento de los Comerciales (Quién vende más)
-SQL
-```
-
-SELECT 
-    user_id AS "Comercial", 
-    SUM(CAST(amount_total AS DOUBLE)) AS "Ventas Totales",
-    AVG(CAST(amount_total AS DOUBLE)) AS "Ticket Medio"
-FROM ventas_crm
-GROUP BY user_id
-ORDER BY "Ventas Totales" DESC;
-```
-
-3. Evolución de Ventas por Mes (Para ver la estacionalidad)
-SQL
-```
-SELECT 
-    SUBSTR(date_order, 1, 7) AS "Mes", 
-    SUM(CAST(amount_total AS DOUBLE)) AS "Ingresos"
-FROM ventas_crm
-GROUP BY SUBSTR(date_order, 1, 7)
-ORDER BY "Mes" ASC;
-```
-La reflexión final para tu práctica:
+1. Ver una muestra de los datos
+ ```
+SELECT *
+FROM "odoo_analytics"."e_odoo_ventas_2026"
+LIMIT 20;
+ ```
+3. Resumen general de ventas
+ ```
+SELECT
+    COUNT(*) AS num_lineas,
+    COUNT(DISTINCT order_id) AS num_pedidos,
+    MIN(TRY_CAST(date_order AS timestamp)) AS primera_fecha,
+    MAX(TRY_CAST(date_order AS timestamp)) AS ultima_fecha,
+    SUM(quantity) AS unidades_totales,
+    ROUND(SUM(total_amount), 2) AS importe_total,
+    ROUND(AVG(total_amount), 2) AS importe_medio_linea
+FROM "odoo_analytics"."e_odoo_ventas_2026";
+ ```
+5. Ventas por estado del pedido
+ ```
+SELECT
+    status,
+    COUNT(*) AS num_lineas,
+    COUNT(DISTINCT order_id) AS num_pedidos,
+    SUM(quantity) AS unidades,
+    ROUND(SUM(total_amount), 2) AS importe_total
+FROM "odoo_analytics"."e_odoo_ventas_2026"
+GROUP BY status
+ORDER BY importe_total DESC;
+ ```
+6. Ventas mensuales
+ ```
+SELECT
+    DATE_FORMAT(
+        DATE_TRUNC('month', TRY_CAST(date_order AS timestamp)),
+        '%Y-%m'
+    ) AS mes,
+    COUNT(DISTINCT order_id) AS num_pedidos,
+    SUM(quantity) AS unidades,
+    ROUND(SUM(total_amount), 2) AS importe_total
+FROM "odoo_analytics"."e_odoo_ventas_2026"
+WHERE TRY_CAST(date_order AS timestamp) IS NOT NULL
+GROUP BY 1
+ORDER BY 1;
+ ```
+7. Top 10 clientes por importe vendido
+ ```
+SELECT
+    customer_name,
+    country,
+    COUNT(DISTINCT order_id) AS num_pedidos,
+    SUM(quantity) AS unidades,
+    ROUND(SUM(total_amount), 2) AS importe_total
+FROM "odoo_analytics"."e_odoo_ventas_2026"
+GROUP BY customer_name, country
+ORDER BY importe_total DESC
+LIMIT 10;
+ ```
+Extra útil: ventas por producto y categoría
+ ```
+SELECT
+    product_category,
+    product_name,
+    COUNT(DISTINCT order_id) AS num_pedidos,
+    SUM(quantity) AS unidades_vendidas,
+    ROUND(AVG(unit_price), 2) AS precio_medio,
+    ROUND(SUM(total_amount), 2) AS importe_total
+FROM "odoo_analytics"."e_odoo_ventas_2026"
+GROUP BY product_category, product_name
+ORDER BY importe_total DESC;
+ ```
+La reflexión final
 
 Cuando le des al botón de Run y veas que el resultado aparece en apenas 1 o 2 segundos, recuerda el concepto core del Módulo 6: Hemos hecho una agrupación matemática pesada sobre un histórico de ventas, y Odoo no se ha enterado en absoluto. Tu base de datos transaccional (RDS) sigue libre y rápida, mientras los directivos pueden jugar con los datos usando Athena pagando solo fracciones de céntimo por cada consulta. ¡El aislamiento perfecto!
